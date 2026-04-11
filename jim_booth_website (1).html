@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jim Booth — AI Infrastructure & Technical Sales Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #161f32;
+  --bg-card-hover: #1c2740;
+  --text-primary: #f0f4fc;
+  --text-secondary: #8b97b8;
+  --text-muted: #5a6580;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-violet: #8b5cf6;
+  --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #10b981 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.04) 100%);
+  --border-subtle: rgba(139, 151, 184, 0.1);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Noise overlay ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Ambient glow ─── */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-orb--blue { width: 600px; height: 600px; background: rgba(59,130,246,0.06); top: -200px; right: -100px; }
+.glow-orb--cyan { width: 500px; height: 500px; background: rgba(6,182,212,0.05); bottom: 20%; left: -150px; }
+.glow-orb--emerald { width: 400px; height: 400px; background: rgba(16,185,129,0.04); bottom: -100px; right: 10%; }
+
+/* ─── Nav ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(10,14,23,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 100;
+}
+.nav-name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-name:hover { color: var(--accent-cyan); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  background: var(--accent-blue) !important;
+  color: #fff !important;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { background: #2563eb !important; transform: translateY(-1px); }
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 3rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 1;
+}
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.08;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.4s;
+}
+.hero-title .gradient-text {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .italic-accent {
+  font-style: italic;
+  color: var(--text-secondary);
+  -webkit-text-fill-color: var(--text-secondary);
+}
+.hero-sub {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.6s;
+}
+
+/* ─── Proof bar ─── */
+.proof-bar {
+  display: flex;
+  gap: 1px;
+  background: var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 800px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.8s;
+}
+.proof-item {
+  flex: 1;
+  background: var(--bg-card);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: background 0.3s;
+}
+.proof-item:hover { background: var(--bg-card-hover); }
+.proof-number {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.proof-number.blue { color: var(--accent-blue); }
+.proof-number.cyan { color: var(--accent-cyan); }
+.proof-number.emerald { color: var(--accent-emerald); }
+.proof-number.amber { color: var(--accent-amber); }
+.proof-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Section base ─── */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 3rem;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  line-height: 1.15;
+}
+
+/* ─── Experience timeline ─── */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s;
+}
+.timeline-item:first-child { border-top: 1px solid var(--border-subtle); }
+.timeline-meta {}
+.timeline-dates {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.timeline-company {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.timeline-content {}
+.timeline-role {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.timeline-highlight {
+  display: inline-block;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+}
+.timeline-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* ─── Skills grid ─── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+.skill-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(59,130,246,0.2);
+  transform: translateY(-2px);
+}
+.skill-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.skill-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.skill-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(139,151,184,0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(139,151,184,0.08);
+}
+
+/* ─── Building section ─── */
+.building-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.build-card {
+  background: var(--gradient-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.build-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.build-card:nth-child(1)::before { background: var(--gradient-hero); }
+.build-card:nth-child(2)::before { background: linear-gradient(90deg, var(--accent-amber), var(--accent-emerald)); }
+.build-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue)); }
+.build-card:hover {
+  border-color: rgba(59,130,246,0.2);
+  transform: translateY(-2px);
+}
+.build-status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-emerald);
+  margin-bottom: 0.75rem;
+}
+.build-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.build-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ─── Credentials ─── */
+.creds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.cred-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+.cred-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.cred-icon.edu { background: rgba(139,92,246,0.12); }
+.cred-icon.cert { background: rgba(245,158,11,0.12); }
+.cred-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+.cred-sub { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ─── Contact footer ─── */
+.contact-section {
+  text-align: center;
+  padding: 6rem 3rem 4rem;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.contact-section .section-title { margin-bottom: 1rem; }
+.contact-sub {
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+}
+.contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+.contact-link.primary {
+  background: var(--accent-blue);
+  color: #fff;
+}
+.contact-link.primary:hover { background: #2563eb; transform: translateY(-1px); }
+.contact-link.secondary {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.contact-link.secondary:hover { color: var(--text-primary); border-color: rgba(139,151,184,0.3); }
+
+footer {
+  text-align: center;
+  padding: 2rem 3rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 7rem 1.5rem 3rem; }
+  .proof-bar { flex-direction: column; }
+  section { padding: 4rem 1.5rem; }
+  .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .contact-section { padding: 4rem 1.5rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="glow-orb glow-orb--blue"></div>
+<div class="glow-orb glow-orb--cyan"></div>
+<div class="glow-orb glow-orb--emerald"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-name">Jim Booth</a>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#building">Building</a>
+    <a href="#credentials">Credentials</a>
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-label">Denver, CO — Technical Sales Leader</div>
+  <h1 class="hero-title">
+    <span class="gradient-text">8-figure pipeline.</span><br>
+    <span class="gradient-text">300MW cooled.</span><br>
+    <span class="italic-accent">I make AI infrastructure sell.</span>
+  </h1>
+  <p class="hero-sub">
+    20+ years turning complex data center, storage, and AI cooling 
+    technology into revenue. I'm the technical closer who sits between 
+    the engineering whiteboard and the signed contract.
+  </p>
+  <div class="proof-bar">
+    <div class="proof-item">
+      <div class="proof-number blue">8-Figure</div>
+      <div class="proof-label">Pipeline Closed</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number cyan">300MW</div>
+      <div class="proof-label">AI Cooling Deployed</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number emerald">30%+</div>
+      <div class="proof-label">Sales Cycle Reduction</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number amber">127%</div>
+      <div class="proof-label">Quota Attainment</div>
+    </div>
+  </div>
+</header>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-label reveal">Career</div>
+  <h2 class="section-title reveal">Where I've Closed</h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Nov 2024 – Feb 2026</div>
+        <div class="timeline-company">Accelsius</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Sr. Solution Architect</div>
+        <div class="timeline-highlight">300MW AI Factory Cooling · Scaled Revenue from $0</div>
+        <div class="timeline-desc">
+          Primary technical closer on the company's largest deal. Promoted within 5 months.
+          Created 20+ technical assets and 30+ proposals, cutting the average sales cycle by 30%.
+          Delivered strategic presentations from C-suite executives to engineering teams.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Mar 2022 – Jul 2024</div>
+        <div class="timeline-company">SADA (Insight)</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Sr. Cloud Engineer</div>
+        <div class="timeline-highlight">GCP · Kubernetes · Cloud Modernization</div>
+        <div class="timeline-desc">
+          Architected scalable HA solutions on Google Cloud Platform. Led infrastructure 
+          assessments and delivered prescriptive roadmaps accelerating cloud adoption.
+          Mentored junior engineers on sales strategy and technical POC execution.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Oct 2013 – Mar 2022</div>
+        <div class="timeline-company">Cisco Systems</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Technical Solution Architect — Cloud</div>
+        <div class="timeline-highlight">US West Region Technical Lead</div>
+        <div class="timeline-desc">
+          Primary technical closer for the US West region. Drove adoption of hyper-converged 
+          storage infrastructure. Spearheaded Kubernetes and cloud-native mentorship 
+          across engineering teams. Executed high-stakes POCs with custom automation.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">1995 – 2013</div>
+        <div class="timeline-company">NetApp · IBM · EMC · Veritas</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Systems Engineering & Technical Leadership</div>
+        <div class="timeline-highlight">127% Quota · $10M+ Territory</div>
+        <div class="timeline-desc">
+          Held senior SE and architect roles across the major enterprise storage platforms.
+          All-flash arrays, XIV, Symmetrix, CLARiiON. Managing Director of Systems 
+          Engineering at CreekPath Systems. Technical Product Manager at Veritas.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-label reveal">Capabilities</div>
+  <h2 class="section-title reveal">What I Bring to the Table</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">⚡</div>
+      <div class="skill-card-title">AI Infrastructure & Cooling</div>
+      <div class="skill-card-desc">
+        Deep expertise in GPU-dense data center design, two-phase direct-to-chip cooling, 
+        and the power/thermal tradeoffs that define AI factory economics.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">GPU Cooling</span>
+        <span class="skill-tag">Two-Phase DTC</span>
+        <span class="skill-tag">Nvidia</span>
+        <span class="skill-tag">AMD</span>
+        <span class="skill-tag">300MW+</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🧠</div>
+      <div class="skill-card-title">AI / Machine Learning</div>
+      <div class="skill-card-desc">
+        Stanford ML specialization. Hands-on with LLM internals — building transformers from 
+        scratch, embeddings, attention mechanisms. Not just talking about AI, building it.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">LLMs</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">Transformers</span>
+        <span class="skill-tag">Claude / GPT</span>
+        <span class="skill-tag">RAG</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">☁️</div>
+      <div class="skill-card-title">Cloud & Infrastructure</div>
+      <div class="skill-card-desc">
+        Triple AWS-certified. Production experience across GCP and AWS with Kubernetes, 
+        serverless, and hybrid architectures for enterprise workloads.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS (SA + Dev + SysOps)</span>
+        <span class="skill-tag">GCP</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">Linux</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">💾</div>
+      <div class="skill-card-title">Enterprise Storage</div>
+      <div class="skill-card-desc">
+        20+ years across every major platform — EMC, NetApp, IBM XIV, Cisco HyperFlex. 
+        From Symmetrix frames to all-flash arrays to hyper-converged.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">EMC</span>
+        <span class="skill-tag">NetApp</span>
+        <span class="skill-tag">IBM</span>
+        <span class="skill-tag">HCI</span>
+        <span class="skill-tag">Data Protection</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🤝</div>
+      <div class="skill-card-title">Technical Sales & Closing</div>
+      <div class="skill-card-desc">
+        The rare engineer who can run a POC on Monday and present to a CTO on Tuesday. 
+        Challenger selling methodology with a track record of outsized quota attainment.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Technical Closing</span>
+        <span class="skill-tag">Challenger Sale</span>
+        <span class="skill-tag">POC Execution</span>
+        <span class="skill-tag">RFP/RFI</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🛠️</div>
+      <div class="skill-card-title">Dev & Automation</div>
+      <div class="skill-card-desc">
+        Writes production code, not just slides. Python, C, Swift. 
+        Custom tooling for sales automation, data protection scripts, and AI workflows.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">Swift</span>
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">Automation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Building -->
+<section id="building">
+  <div class="section-label reveal">Currently Building</div>
+  <h2 class="section-title reveal">What I'm Working On <span class="italic-accent" style="font-family: var(--font-display);">Right Now</span></h2>
+  <div class="building-grid">
+    <div class="build-card reveal">
+      <div class="build-status">● In Progress</div>
+      <div class="build-title">LLM from Scratch</div>
+      <div class="build-desc">
+        Building a transformer-based language model from the ground up in PyTorch. 
+        Tokenizer, attention, training loop — understanding every layer 
+        of the stack I'm selling.
+      </div>
+    </div>
+    <div class="build-card reveal">
+      <div class="build-status">● Exploring</div>
+      <div class="build-title">AI-Powered Sales Tools</div>
+      <div class="build-desc">
+        Prototyping RAG pipelines and agentic workflows to automate 
+        proposal generation, RFP responses, and technical asset creation 
+        using the Claude API.
+      </div>
+    </div>
+    <div class="build-card reveal">
+      <div class="build-status">● Exploring</div>
+      <div class="build-title">GPU Cluster Cost Optimizer</div>
+      <div class="build-desc">
+        TCO modeling tool comparing air, single-phase, and two-phase 
+        direct-to-chip cooling approaches for GPU-dense deployments. 
+        Domain expertise meets code.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Credentials -->
+<section id="credentials">
+  <div class="section-label reveal">Education & Certifications</div>
+  <h2 class="section-title reveal">Credentials</h2>
+  <div class="creds-grid">
+    <div class="cred-item reveal">
+      <div class="cred-icon edu">🎓</div>
+      <div>
+        <div class="cred-title">B.S. Computer Engineering</div>
+        <div class="cred-sub">Kansas State University</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon edu">🎓</div>
+      <div>
+        <div class="cred-title">Machine Learning Specialization</div>
+        <div class="cred-sub">Stanford University</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS Solutions Architect</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS Certified Developer</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS SysOps Administrator</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<div class="contact-section" id="contact">
+  <div class="section-label reveal">Let's Talk</div>
+  <h2 class="section-title reveal">Ready to Build Something?</h2>
+  <p class="contact-sub reveal">
+    Whether you need a technical closer for AI infrastructure deals or a 
+    leader who can bridge engineering and revenue — let's connect.
+  </p>
+  <div class="contact-links reveal">
+    <a href="mailto:jimbooth@me.com" class="contact-link primary">✉ jimbooth@me.com</a>
+    <a href="https://linkedin.com/in/jimbooth" class="contact-link secondary">LinkedIn</a>
+    <a href="tel:3039816276" class="contact-link secondary">303.981.6276</a>
+  </div>
+</div>
+
+<footer>
+  <p>Denver, Colorado · Jim Booth · 2026</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
