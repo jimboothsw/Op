@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Jim Booth — AI Infrastructure & Technical Sales Leader</title>
+<meta name="description" content="Jim Booth — Sr. Solution Architect and technical closer specializing in AI infrastructure, GPU cooling, and enterprise storage. 300MW deployed, 8-figure pipeline, triple AWS-certified. Stanford ML. Denver, CO.">
+<meta name="keywords" content="Jim Booth, AI infrastructure, GPU cooling, two-phase direct-to-chip, enterprise storage, technical sales engineer, solution architect, Denver, AWS, Kubernetes, data center, sales engineering">
+<meta property="og:title" content="Jim Booth — AI Infrastructure & Technical Sales Leader">
+<meta property="og:description" content="Technical closer who scaled AI cooling from $0 to 300MW. Live AI demos, RAG pipeline, and proposal engine built from scratch.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://endur.dev">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jim Booth — AI Infrastructure & Technical Sales Leader">
+<meta name="twitter:description" content="Technical closer who scaled AI cooling from $0 to 300MW. Live AI demos, RAG pipeline, and proposal engine built from scratch.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #161f32;
+  --bg-card-hover: #1c2740;
+  --text-primary: #f0f4fc;
+  --text-secondary: #8b97b8;
+  --text-muted: #5a6580;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-violet: #8b5cf6;
+  --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #10b981 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.04) 100%);
+  --border-subtle: rgba(139, 151, 184, 0.1);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Noise overlay ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Ambient glow ─── */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-orb--blue { width: 600px; height: 600px; background: rgba(59,130,246,0.06); top: -200px; right: -100px; }
+.glow-orb--cyan { width: 500px; height: 500px; background: rgba(6,182,212,0.05); bottom: 20%; left: -150px; }
+.glow-orb--emerald { width: 400px; height: 400px; background: rgba(16,185,129,0.04); bottom: -100px; right: 10%; }
+
+/* ─── Nav ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(10,14,23,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 100;
+}
+.nav-name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-name:hover { color: var(--accent-cyan); }
+.nav-pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 5px;
+  border: 1px solid rgba(139,151,184,0.15);
+  background: rgba(139,151,184,0.06);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.nav-pill:hover {
+  border-color: rgba(6,182,212,0.3);
+  color: var(--accent-cyan);
+  background: rgba(6,182,212,0.06);
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  background: var(--accent-blue) !important;
+  color: #fff !important;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { background: #2563eb !important; transform: translateY(-1px); }
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 3rem 4rem;
+  max-width: 1320px;
+  margin: 0 auto;
+  z-index: 1;
+}
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.08;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.4s;
+}
+.hero-title .gradient-text {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .italic-accent {
+  font-style: italic;
+  color: var(--text-secondary);
+  -webkit-text-fill-color: var(--text-secondary);
+}
+.hero-sub {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.6s;
+}
+
+/* ─── Proof bar ─── */
+.proof-bar {
+  display: flex;
+  gap: 1px;
+  background: var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 920px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.8s;
+}
+.proof-item {
+  flex: 1;
+  background: var(--bg-card);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  transition: background 0.3s;
+}
+.proof-item:hover { background: var(--bg-card-hover); }
+.proof-number {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+}
+.proof-number.blue { color: var(--accent-blue); }
+.proof-number.cyan { color: var(--accent-cyan); }
+.proof-number.emerald { color: var(--accent-emerald); }
+.proof-number.amber { color: var(--accent-amber); }
+.proof-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Section base ─── */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 6rem 3rem;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  line-height: 1.15;
+}
+
+/* ─── Experience timeline ─── */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s;
+}
+.timeline-item:first-child { border-top: 1px solid var(--border-subtle); }
+.timeline-meta {}
+.timeline-dates {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.timeline-company {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.timeline-content {}
+.timeline-role {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.timeline-highlight {
+  display: inline-block;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+}
+.timeline-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* ─── Skills grid ─── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+.skill-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(59,130,246,0.2);
+  transform: translateY(-2px);
+}
+.skill-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.skill-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.skill-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(139,151,184,0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(139,151,184,0.08);
+}
+
+/* ─── Building section ─── */
+.building-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.build-card {
+  background: var(--gradient-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.build-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.build-card:nth-child(1)::before { background: var(--gradient-hero); }
+.build-card:nth-child(2)::before { background: linear-gradient(90deg, var(--accent-amber), var(--accent-emerald)); }
+.build-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue)); }
+.build-card:hover {
+  border-color: rgba(59,130,246,0.2);
+  transform: translateY(-2px);
+}
+.build-status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-emerald);
+  margin-bottom: 0.75rem;
+}
+.build-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.build-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ─── Credentials ─── */
+.creds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.cred-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+.cred-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.cred-icon.edu { background: rgba(139,92,246,0.12); }
+.cred-icon.cert { background: rgba(245,158,11,0.12); }
+.cred-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+.cred-sub { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ─── Contact footer ─── */
+.contact-section {
+  text-align: center;
+  padding: 6rem 3rem 4rem;
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.contact-section .section-title { margin-bottom: 1rem; }
+.contact-sub {
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+}
+.contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+.contact-link.primary {
+  background: var(--accent-blue);
+  color: #fff;
+}
+.contact-link.primary:hover { background: #2563eb; transform: translateY(-1px); }
+.contact-link.secondary {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.contact-link.secondary:hover { color: var(--text-primary); border-color: rgba(139,151,184,0.3); }
+
+footer {
+  text-align: center;
+  padding: 2rem 3rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 7rem 1.5rem 3rem; }
+  .proof-bar { flex-direction: column; }
+  section { padding: 4rem 1.5rem; }
+  .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .contact-section { padding: 4rem 1.5rem 3rem; }
+  .rag-hero { padding: 1.5rem; }
+  .rag-hero-grid { grid-template-columns: 1fr; }
+  .rag-demo-container { height: 380px; }
+  .tools-row { grid-template-columns: 1fr; }
+}
+/* ─── RAG Hero ─── */
+.rag-hero {
+  background: var(--gradient-subtle);
+  border: 1px solid rgba(6,182,212,0.15);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.rag-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-hero);
+}
+.rag-hero-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-emerald);
+  margin-bottom: 1.5rem;
+}
+.rag-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+.rag-hero-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.rag-hero-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+.rag-hero-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+.rag-stack-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.15);
+  color: var(--accent-cyan);
+}
+.rag-hero-topics { }
+.rag-topics-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.rag-topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.rag-topics-list span {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(139,151,184,0.06);
+  color: var(--text-muted);
+  border: 1px solid rgba(139,151,184,0.08);
+}
+.rag-demo-container {
+  background: rgba(10,14,23,0.7);
+  border: 1px solid rgba(139,151,184,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+}
+.rag-demo-header {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid rgba(139,151,184,0.08);
+}
+.rag-demo-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.rag-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+.rag-welcome {
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+}
+.rag-welcome-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.rag-welcome-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rag-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+.rag-suggestion {
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(139,151,184,0.12);
+  background: rgba(22,31,50,0.5);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+  max-width: 320px;
+  width: 100%;
+  text-align: left;
+}
+.rag-suggestion:hover {
+  border-color: rgba(6,182,212,0.3);
+  color: var(--accent-cyan);
+  background: rgba(6,182,212,0.05);
+}
+.rag-input-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid rgba(139,151,184,0.08);
+  background: rgba(16,20,30,0.5);
+}
+.rag-input {
+  flex: 1;
+  background: rgba(10,14,23,0.6);
+  border: 1px solid rgba(139,151,184,0.12);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.rag-input:focus { border-color: rgba(6,182,212,0.4); }
+.rag-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+.rag-send:hover { opacity: 0.85; }
+.rag-send:disabled { opacity: 0.3; cursor: not-allowed; }
+.rag-msg {
+  margin-bottom: 1rem;
+  animation: fadeUp 0.3s ease;
+}
+.rag-msg-user {
+  text-align: right;
+}
+.rag-msg-user .rag-bubble {
+  display: inline-block;
+  background: rgba(59,130,246,0.15);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 12px 12px 2px 12px;
+  padding: 0.6rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  max-width: 85%;
+  text-align: left;
+}
+.rag-msg-ai .rag-bubble {
+  background: rgba(22,31,50,0.6);
+  border: 1px solid rgba(139,151,184,0.08);
+  border-radius: 12px 12px 12px 2px;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 95%;
+}
+.rag-msg-ai .rag-bubble strong { color: var(--text-primary); }
+.rag-msg-ai .rag-bubble h2, .rag-msg-ai .rag-bubble h3 {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 0.75rem 0 0.3rem;
+  font-family: var(--font-body);
+}
+.rag-sources {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(139,151,184,0.08);
+}
+.rag-sources-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.rag-source-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  background: rgba(6,182,212,0.08);
+  color: var(--accent-cyan);
+  margin-right: 0.25rem;
+  margin-bottom: 0.2rem;
+  font-family: var(--font-mono);
+}
+
+/* ─── Tools row ─── */
+.tools-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.tool-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.tool-card:hover {
+  border-color: rgba(59,130,246,0.2);
+  transform: translateY(-2px);
+}
+.tool-card-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-emerald);
+  margin-bottom: 0.6rem;
+}
+.tool-card-icon { font-size: 1.3rem; margin-bottom: 0.6rem; }
+.tool-card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+.tool-card-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── Demo launch button ─── */
+.demo-launch-btn {
+  margin-top: 1rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(6,182,212,0.3);
+  background: rgba(6,182,212,0.1);
+  color: var(--accent-cyan);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.demo-launch-btn:hover {
+  background: rgba(6,182,212,0.2);
+  border-color: rgba(6,182,212,0.5);
+  transform: translateY(-1px);
+}
+
+/* ─── Proposal Engine Modal ─── */
+.pe-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.pe-overlay.open { display: flex; opacity: 1; }
+.pe-modal {
+  position: fixed;
+  inset: 20px;
+  background: #0c1018;
+  border-radius: 16px;
+  border: 1px solid rgba(139,151,184,0.12);
+  z-index: 10001;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+}
+.pe-modal.open { display: flex; }
+.pe-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(139,151,184,0.1);
+  flex-shrink: 0;
+}
+.pe-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.pe-modal-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+.pe-modal-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.pe-modal-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pe-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(139,151,184,0.1);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.pe-close:hover { background: rgba(139,151,184,0.08); color: var(--text-primary); }
+.pe-domain-bar {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(139,151,184,0.06);
+  flex-shrink: 0;
+}
+.pe-domain-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(139,151,184,0.1);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.pe-domain-btn.active {
+  border-color: rgba(6,182,212,0.4);
+  background: rgba(6,182,212,0.1);
+  color: var(--accent-cyan);
+}
+.pe-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+.pe-mode-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.pe-mode-card {
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(139,151,184,0.1);
+  background: rgba(22,31,50,0.5);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.pe-mode-card.active {
+  border-color: rgba(6,182,212,0.3);
+  background: rgba(6,182,212,0.06);
+}
+.pe-mode-card:hover { border-color: rgba(139,151,184,0.25); }
+.pe-mode-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+.pe-mode-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+.pe-mode-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+.pe-workspace {
+  display: grid;
+  gap: 1.5rem;
+}
+.pe-workspace.split { grid-template-columns: 1fr 1fr; }
+.pe-panel {
+  background: rgba(22,31,50,0.4);
+  border: 1px solid rgba(139,151,184,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.pe-panel-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(139,151,184,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pe-panel-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pe-panel-body { padding: 1rem; }
+.pe-textarea {
+  width: 100%;
+  min-height: 200px;
+  background: rgba(10,14,23,0.6);
+  border: 1px solid rgba(139,151,184,0.1);
+  border-radius: 8px;
+  padding: 0.85rem;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  font-family: var(--font-body);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pe-textarea:focus { border-color: rgba(6,182,212,0.4); }
+.pe-input {
+  width: 100%;
+  background: rgba(10,14,23,0.6);
+  border: 1px solid rgba(139,151,184,0.1);
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+.pe-input:focus { border-color: rgba(6,182,212,0.4); }
+.pe-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+.pe-field { margin-bottom: 0.85rem; }
+.pe-section-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.pe-chip {
+  padding: 0.3rem 0.65rem;
+  border-radius: 5px;
+  border: 1px solid rgba(139,151,184,0.1);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.pe-chip.active {
+  border-color: rgba(6,182,212,0.3);
+  background: rgba(6,182,212,0.1);
+  color: var(--accent-cyan);
+}
+.pe-generate-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  margin-top: 0.75rem;
+  transition: all 0.2s;
+}
+.pe-generate-btn:hover { opacity: 0.9; }
+.pe-generate-btn:disabled {
+  background: rgba(59,130,246,0.2);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.pe-output {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+.pe-output h1, .pe-output h2, .pe-output h3 { color: var(--text-primary); font-family: var(--font-display); }
+.pe-output h2 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(139,151,184,0.1); }
+.pe-output h3 { font-size: 1rem; margin: 1rem 0 0.4rem; }
+.pe-output strong { color: var(--text-primary); }
+.pe-output ul { margin: 0.5rem 0 0.75rem 1.25rem; }
+.pe-output li { margin: 0.25rem 0; }
+.pe-stream-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(6,182,212,0.1);
+  border: 1px solid rgba(6,182,212,0.2);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-cyan);
+}
+.pe-copy-btn {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(139,151,184,0.12);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.pe-copy-btn:hover { color: var(--text-primary); }
+.pe-error {
+  padding: 0.85rem;
+  border-radius: 8px;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: #fca5a5;
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}
+@keyframes peBlink { 50% { opacity: 0; } }
+.pe-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent-cyan);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: peBlink 0.8s step-end infinite;
+}
+@keyframes pePulse { 0%,100% { opacity:0.4 } 50% { opacity:1 } }
+.pe-pulse { animation: pePulse 1.5s infinite; }
+
+@media (max-width: 768px) {
+  .pe-modal { inset: 0; border-radius: 0; }
+  .pe-mode-selector { grid-template-columns: 1fr; }
+  .pe-workspace.split { grid-template-columns: 1fr; }
+  .pe-domain-bar { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<div class="glow-orb glow-orb--blue"></div>
+<div class="glow-orb glow-orb--cyan"></div>
+<div class="glow-orb glow-orb--emerald"></div>
+
+<!-- Nav -->
+<nav>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="#" class="nav-name">Jim Booth</a>
+    <div style="display:flex;gap:0.4rem;">
+      <a href="/Jim_Booth_Resume.pdf" target="_blank" class="nav-pill">📄 Resume</a>
+      <a href="https://linkedin.com/in/jimbooth" target="_blank" class="nav-pill">in LinkedIn</a>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#tools">AI Tools</a>
+    <a href="#building">Building</a>
+    <a href="#credentials">Credentials</a>
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-label">Denver, CO — Technical Sales Leader</div>
+  <h1 class="hero-title">
+    <span class="gradient-text">I learn the technology.</span><br>
+    <span class="gradient-text">I build the trust.</span><br>
+    <span class="italic-accent">I perform the technical close.</span>
+  </h1>
+  <p class="hero-sub">
+    20+ years translating complex infrastructure — from storage arrays to AI cooling 
+    to GPU clusters — into language that lands with engineers and C-suites alike. 
+    I build transformers in PyTorch, architect data center solutions, and earn the 
+    technical credibility that turns prospects into partners. Stanford ML. Triple 
+    AWS-certified. 8-figure pipeline.
+  </p>
+  <div class="proof-bar">
+    <div class="proof-item">
+      <div class="proof-number blue">8-Figure</div>
+      <div class="proof-label">Pipeline Closed</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number cyan">300MW</div>
+      <div class="proof-label">AI Cooling Deployed</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number emerald">30%+</div>
+      <div class="proof-label">Sales Cycle Reduction</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-number amber">127%</div>
+      <div class="proof-label">Quota Attainment</div>
+    </div>
+  </div>
+</header>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-label reveal">Career</div>
+  <h2 class="section-title reveal">Where I've Closed</h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Nov 2024 – Feb 2026</div>
+        <div class="timeline-company">Accelsius</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Sr. Solution Architect</div>
+        <div class="timeline-highlight">300MW AI Factory Cooling · Scaled Revenue from $0</div>
+        <div class="timeline-desc">
+          Primary technical closer on the company's largest deal. Promoted within 5 months.
+          Created 20+ technical assets and 30+ proposals, cutting the average sales cycle by 30%.
+          Delivered strategic presentations from C-suite executives to engineering teams.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Mar 2022 – Jul 2024</div>
+        <div class="timeline-company">SADA (Insight)</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Sr. Cloud Engineer</div>
+        <div class="timeline-highlight">GCP · Kubernetes · Cloud Modernization</div>
+        <div class="timeline-desc">
+          Architected scalable HA solutions on Google Cloud Platform. Led infrastructure 
+          assessments and delivered prescriptive roadmaps accelerating cloud adoption.
+          Mentored junior engineers on sales strategy and technical POC execution.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">Oct 2013 – Mar 2022</div>
+        <div class="timeline-company">Cisco Systems</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Technical Solution Architect — Cloud</div>
+        <div class="timeline-highlight">US West Region Technical Lead</div>
+        <div class="timeline-desc">
+          Primary technical closer for the US West region. Drove adoption of hyper-converged 
+          storage infrastructure. Spearheaded Kubernetes and cloud-native mentorship 
+          across engineering teams. Executed high-stakes POCs with custom automation.
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-dates">1995 – 2013</div>
+        <div class="timeline-company">NetApp · IBM · EMC · Veritas</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Systems Engineering & Technical Leadership</div>
+        <div class="timeline-highlight">127% Quota · $10M+ Territory</div>
+        <div class="timeline-desc">
+          Held senior SE and architect roles across the major enterprise storage platforms.
+          All-flash arrays, XIV, Symmetrix, CLARiiON. Managing Director of Systems 
+          Engineering at CreekPath Systems. Technical Product Manager at Veritas.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-label reveal">Capabilities</div>
+  <h2 class="section-title reveal">What I Bring to the Table</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">⚡</div>
+      <div class="skill-card-title">AI Infrastructure & Cooling</div>
+      <div class="skill-card-desc">
+        Deep expertise in GPU-dense data center design, two-phase direct-to-chip cooling, 
+        and the power/thermal tradeoffs that define AI factory economics.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">GPU Cooling</span>
+        <span class="skill-tag">Two-Phase DTC</span>
+        <span class="skill-tag">Nvidia</span>
+        <span class="skill-tag">AMD</span>
+        <span class="skill-tag">300MW+</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🧠</div>
+      <div class="skill-card-title">AI / Machine Learning</div>
+      <div class="skill-card-desc">
+        Stanford ML specialization. Hands-on with LLM internals — building transformers from 
+        scratch, embeddings, attention mechanisms. Not just talking about AI, building it.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">LLMs</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">Transformers</span>
+        <span class="skill-tag">Claude / GPT</span>
+        <span class="skill-tag">RAG</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">☁️</div>
+      <div class="skill-card-title">Cloud & Infrastructure</div>
+      <div class="skill-card-desc">
+        Triple AWS-certified. Production experience across GCP and AWS with Kubernetes, 
+        serverless, and hybrid architectures for enterprise workloads.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS (SA + Dev + SysOps)</span>
+        <span class="skill-tag">GCP</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">Linux</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">💾</div>
+      <div class="skill-card-title">Enterprise Storage</div>
+      <div class="skill-card-desc">
+        20+ years across every major platform — EMC, NetApp, IBM XIV, Cisco HyperFlex. 
+        From Symmetrix frames to all-flash arrays to hyper-converged.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">EMC</span>
+        <span class="skill-tag">NetApp</span>
+        <span class="skill-tag">IBM</span>
+        <span class="skill-tag">HCI</span>
+        <span class="skill-tag">Data Protection</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🤝</div>
+      <div class="skill-card-title">Technical Sales & Closing</div>
+      <div class="skill-card-desc">
+        The rare engineer who can run a POC on Monday and present to a CTO on Tuesday. 
+        Challenger selling methodology with a track record of outsized quota attainment.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Technical Closing</span>
+        <span class="skill-tag">Challenger Sale</span>
+        <span class="skill-tag">POC Execution</span>
+        <span class="skill-tag">RFP/RFI</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🛠️</div>
+      <div class="skill-card-title">Dev & Automation</div>
+      <div class="skill-card-desc">
+        Writes production code, not just slides. Python, C, Swift. 
+        Custom tooling for sales automation, data protection scripts, and AI workflows.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">Swift</span>
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">Automation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI Tools -->
+<section id="tools" style="padding-bottom:3rem">
+  <div class="section-label reveal">Live AI Tools</div>
+  <h2 class="section-title reveal">Built by Me. <span class="italic-accent" style="font-family: var(--font-display);">Powered by AI.</span></h2>
+
+  <!-- RAG Hero Card -->
+  <div class="rag-hero reveal">
+    <div class="rag-hero-badge">● LIVE — RAG Pipeline Demo</div>
+    <div class="rag-hero-grid">
+      <div class="rag-hero-info">
+        <h3 class="rag-hero-title">Infrastructure Knowledge Engine</h3>
+        <p class="rag-hero-desc">
+          A retrieval-augmented generation pipeline built from scratch. It searches a curated 
+          knowledge base of data center, storage, cooling, and cloud infrastructure documentation, 
+          retrieves the most relevant context using TF-IDF vector similarity, then generates 
+          precise answers grounded in real technical content.
+        </p>
+        <div class="rag-hero-stack">
+          <span class="rag-stack-tag">Vector Search</span>
+          <span class="rag-stack-tag">TF-IDF Embeddings</span>
+          <span class="rag-stack-tag">Cosine Similarity</span>
+          <span class="rag-stack-tag">Claude API</span>
+          <span class="rag-stack-tag">Streaming</span>
+        </div>
+        <div class="rag-hero-topics">
+          <div class="rag-topics-label">Knowledge domains:</div>
+          <div class="rag-topics-list">
+            <span>Two-Phase DTC Cooling</span>
+            <span>GPU Infrastructure</span>
+            <span>Enterprise Storage</span>
+            <span>Kubernetes</span>
+            <span>Cloud Architecture</span>
+            <span>Data Protection</span>
+          </div>
+        </div>
+      </div>
+      <div class="rag-hero-demo">
+        <div class="rag-demo-container">
+          <div class="rag-demo-header">
+            <span class="rag-demo-title">🔍 Ask the Knowledge Base</span>
+          </div>
+          <div class="rag-chat" id="ragChat">
+            <div class="rag-welcome">
+              <div class="rag-welcome-icon">🧠</div>
+              <div class="rag-welcome-text">Ask me anything about data center infrastructure, cooling systems, storage architectures, or cloud design.</div>
+              <div class="rag-suggestions" id="ragSuggestions">
+                <button class="rag-suggestion" onclick="ragAsk('What are the advantages of two-phase direct-to-chip cooling vs single-phase?')">Two-phase vs single-phase cooling?</button>
+                <button class="rag-suggestion" onclick="ragAsk('How do you size a cooling system for a 50kW per rack GPU cluster?')">Sizing cooling for 50kW/rack?</button>
+                <button class="rag-suggestion" onclick="ragAsk('What is the best storage architecture for AI training workloads?')">Storage for AI training?</button>
+                <button class="rag-suggestion" onclick="ragAsk('How does Kubernetes handle stateful storage workloads?')">K8s stateful storage?</button>
+              </div>
+            </div>
+          </div>
+          <div class="rag-input-bar">
+            <input class="rag-input" id="ragInput" placeholder="Ask about infrastructure, cooling, storage, cloud..." onkeydown="if(event.key==='Enter')ragAsk()">
+            <button class="rag-send" id="ragSend" onclick="ragAsk()">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secondary tools row -->
+  <div class="tools-row reveal">
+    <div class="tool-card" onclick="openProposalEngine()">
+      <div class="tool-card-badge">● Live Demo</div>
+      <div class="tool-card-icon">📄</div>
+      <div class="tool-card-title">Proposal Engine</div>
+      <div class="tool-card-desc">AI-powered RFP response generator and proposal builder. Multi-domain templates for cooling, storage, and cloud.</div>
+      <button class="demo-launch-btn" onclick="event.stopPropagation();openProposalEngine()">⚡ Launch</button>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-badge" style="color:var(--accent-amber)">● In Progress</div>
+      <div class="tool-card-icon">🔥</div>
+      <div class="tool-card-title">GPU Cluster Cost Optimizer</div>
+      <div class="tool-card-desc">TCO modeling comparing air, single-phase, and two-phase DTC cooling for GPU-dense deployments.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Building -->
+<section id="building" style="padding-top:2rem">
+  <div class="section-label reveal">Also Building</div>
+  <h2 class="section-title reveal" style="font-size:clamp(1.5rem,3vw,2.2rem)">Deep in the Stack</h2>
+  <div class="building-grid" style="max-width:900px">
+    <div class="build-card reveal">
+      <div class="build-status">● In Progress</div>
+      <div class="build-title">LLM from Scratch</div>
+      <div class="build-desc">
+        Building a transformer-based language model from the ground up in PyTorch. 
+        Tokenizer, attention, training loop — understanding every layer 
+        of the stack I'm selling.
+      </div>
+    </div>
+    <div class="build-card reveal">
+      <div class="build-status">● In Progress</div>
+      <div class="build-title">VAST Data Platform Deep Dive</div>
+      <div class="build-desc">
+        Researching VAST Data's Universal Storage architecture — DASE, VMS administration, 
+        multiprotocol access, data protection, and Kubernetes CSI integration. 
+        Building toward Sr. Systems Engineering expertise and VASTronaut certification.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Credentials -->
+<section id="credentials">
+  <div class="section-label reveal">Education & Certifications</div>
+  <h2 class="section-title reveal">Credentials</h2>
+  <div class="creds-grid">
+    <div class="cred-item reveal">
+      <div class="cred-icon edu">🎓</div>
+      <div>
+        <div class="cred-title">B.S. Computer Engineering</div>
+        <div class="cred-sub">Kansas State University</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon edu">🎓</div>
+      <div>
+        <div class="cred-title">Machine Learning Specialization</div>
+        <div class="cred-sub">Stanford University</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS Solutions Architect</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS Certified Developer</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+    <div class="cred-item reveal">
+      <div class="cred-icon cert">📜</div>
+      <div>
+        <div class="cred-title">AWS SysOps Administrator</div>
+        <div class="cred-sub">Amazon Web Services</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<div class="contact-section" id="contact">
+  <div class="section-label reveal">Let's Talk</div>
+  <h2 class="section-title reveal">Ready to Build Something?</h2>
+  <p class="contact-sub reveal">
+    Whether you need a technical closer for AI infrastructure deals or a 
+    leader who can bridge engineering and revenue — let's connect.
+  </p>
+  <div class="contact-links reveal">
+    <a href="mailto:jimbooth@me.com" class="contact-link primary">✉ jimbooth@me.com</a>
+    <a href="https://linkedin.com/in/jimbooth" class="contact-link secondary">LinkedIn</a>
+    <a href="tel:3039816276" class="contact-link secondary">303.981.6276</a>
+  </div>
+</div>
+
+<footer>
+  <p>Denver, Colorado · Jim Booth · 2026</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+<!-- Proposal Engine Modal -->
+<div class="pe-overlay" id="peOverlay" onclick="closeProposalEngine()"></div>
+<div class="pe-modal" id="peModal">
+  <div class="pe-modal-header">
+    <div class="pe-modal-title">
+      <div class="pe-modal-icon">📄</div>
+      <div>
+        <div class="pe-modal-name">Proposal Engine</div>
+        <div class="pe-modal-sub">AI-Powered RFP & Proposal Generator</div>
+      </div>
+    </div>
+    <button class="pe-close" onclick="closeProposalEngine()">✕</button>
+  </div>
+  <div class="pe-domain-bar" id="peDomainBar"></div>
+  <div class="pe-body" id="peBody"></div>
+</div>
+
+<script>
+// ─── Proposal Engine State ───
+const PE = {
+  mode: null,
+  domain: 'ai_cooling',
+  rfpText: '',
+  proposalInputs: {},
+  selectedSections: [],
+  output: '',
+  loading: false,
+  error: null,
+  streamPhase: ''
+};
+
+const PE_DOMAINS = {
+  ai_cooling: {
+    name: "AI Cooling & Data Center", icon: "⚡", color: "#06b6d4",
+    sections: ["Executive Summary","Technical Solution Architecture","Cooling Topology & Design","Power & Thermal Analysis","Implementation Timeline","Total Cost of Ownership","Risk Mitigation","Service & Support"],
+    system: "You are an expert technical sales engineer specializing in AI data center cooling infrastructure, including two-phase direct-to-chip (DTC) cooling, rear-door heat exchangers, and immersion cooling for GPU-dense environments (Nvidia, AMD). You understand power density (30-100+ kW/rack), PUE optimization, and the economics of AI factory buildouts. Write in a confident, technically precise tone appropriate for C-level and engineering audiences."
+  },
+  enterprise_storage: {
+    name: "Enterprise Storage", icon: "💾", color: "#8b5cf6",
+    sections: ["Executive Summary","Current State Assessment","Proposed Storage Architecture","Data Protection & DR Strategy","Migration Plan","Performance Benchmarks","Total Cost of Ownership","Implementation & Support"],
+    system: "You are an expert enterprise storage solutions architect with deep knowledge of EMC, NetApp, IBM, Pure Storage, VAST Data, and hyper-converged platforms. You understand block, file, and object storage; NVMe-oF; data protection; replication; and cloud tiering. Write in a confident, technically precise tone appropriate for IT leadership."
+  },
+  cloud_infra: {
+    name: "Cloud & Kubernetes", icon: "☁️", color: "#3b82f6",
+    sections: ["Executive Summary","Cloud Architecture Design","Migration Strategy","Security & Compliance","Kubernetes & Container Strategy","Cost Optimization","Operational Runbook","SLA & Support Model"],
+    system: "You are an expert cloud solutions architect certified across AWS and GCP. You specialize in Kubernetes, serverless architectures, cloud-native modernization, and hybrid/multi-cloud strategies. Write in a confident, technically precise tone appropriate for CTOs and DevOps leaders."
+  }
+};
+
+const PE_QUESTIONS = [
+  { id:"client", label:"Client / Company Name", placeholder:"e.g., Acme Corp", type:"text" },
+  { id:"challenge", label:"Business Challenge", placeholder:"What problem is the client trying to solve?", type:"textarea" },
+  { id:"requirements", label:"Key Requirements", placeholder:"Technical or business requirements, constraints...", type:"textarea" },
+  { id:"budget", label:"Budget Range (optional)", placeholder:"e.g., $500K - $1M", type:"text" },
+  { id:"differentiators", label:"Your Key Differentiators", placeholder:"What makes your solution unique?", type:"textarea" },
+  { id:"timeline", label:"Desired Timeline", placeholder:"e.g., 90-day deployment", type:"text" },
+];
+
+function openProposalEngine() {
+  document.getElementById('peOverlay').classList.add('open');
+  document.getElementById('peModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  PE.selectedSections = [...PE_DOMAINS[PE.domain].sections];
+  renderPE();
+}
+function closeProposalEngine() {
+  document.getElementById('peOverlay').classList.remove('open');
+  document.getElementById('peModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setDomain(d) {
+  PE.domain = d;
+  PE.selectedSections = [...PE_DOMAINS[d].sections];
+  PE.output = '';
+  PE.error = null;
+  renderPE();
+}
+function setMode(m) {
+  PE.mode = m;
+  PE.output = '';
+  PE.error = null;
+  renderPE();
+}
+function toggleSection(s) {
+  const i = PE.selectedSections.indexOf(s);
+  if (i >= 0) PE.selectedSections.splice(i, 1);
+  else PE.selectedSections.push(s);
+  renderPE();
+}
+
+function peMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, m => '<ul>'+m+'</ul>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br/>');
+}
+
+async function peGenerate() {
+  PE.loading = true;
+  PE.output = '';
+  PE.error = null;
+  PE.streamPhase = 'Analyzing requirements...';
+  renderPE();
+
+  const d = PE_DOMAINS[PE.domain];
+  let system, user;
+
+  if (PE.mode === 'rfp') {
+    system = d.system + '\n\nYou are responding to an RFP. Analyze it carefully and generate a comprehensive, professional response. Use markdown headers (##). Be specific with metrics.';
+    user = 'Please analyze and respond to this RFP:\n\n---\n' + PE.rfpText + '\n---\n\nDomain: ' + d.name;
+  } else {
+    const inputs = PE_QUESTIONS.map(q => {
+      const v = PE.proposalInputs[q.id];
+      return v ? q.label + ': ' + v : null;
+    }).filter(Boolean).join('\n');
+    system = d.system + '\n\nBuild a technical sales proposal from scratch. Use markdown headers (##) for each section. Be specific and thorough.';
+    user = 'Generate a proposal with sections: ' + PE.selectedSections.join(', ') + '\n\nContext:\n' + inputs + '\n\nDomain: ' + d.name;
+  }
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4096,
+        stream: true,
+        system: system,
+        messages: [{ role: 'user', content: user }]
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'API error: ' + resp.status);
+    }
+
+    PE.streamPhase = 'Generating...';
+    renderPE();
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const json = line.slice(6).trim();
+          if (json === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(json);
+            if (evt.type === 'content_block_delta' && evt.delta?.text) {
+              PE.output += evt.delta.text;
+              updateOutput();
+            }
+          } catch {}
+        }
+      }
+    }
+  } catch (err) {
+    PE.error = err.message;
+  } finally {
+    PE.loading = false;
+    PE.streamPhase = '';
+    renderPE();
+  }
+}
+
+function updateOutput() {
+  const el = document.getElementById('peOutputContent');
+  if (el) {
+    el.innerHTML = peMarkdown(PE.output) + (PE.loading ? '<span class="pe-cursor"></span>' : '');
+    el.scrollTop = el.scrollHeight;
+  }
+}
+
+function peCopyOutput() {
+  navigator.clipboard.writeText(PE.output);
+}
+
+function renderPE() {
+  const d = PE_DOMAINS[PE.domain];
+
+  // Domain bar
+  document.getElementById('peDomainBar').innerHTML = Object.entries(PE_DOMAINS).map(([k, v]) =>
+    '<button class="pe-domain-btn ' + (PE.domain === k ? 'active' : '') + '" onclick="setDomain(\'' + k + '\')">' + v.icon + ' ' + v.name + '</button>'
+  ).join('');
+
+  // Body
+  const body = document.getElementById('peBody');
+  let html = '';
+
+  // Mode selector
+  html += '<div class="pe-mode-selector">';
+  html += '<div class="pe-mode-card ' + (PE.mode === 'rfp' ? 'active' : '') + '" onclick="setMode(\'rfp\')">';
+  html += '<div class="pe-mode-icon">📋</div><div class="pe-mode-title">RFP Response Mode</div>';
+  html += '<div class="pe-mode-desc">Paste an RFP and get a complete, structured response draft.</div></div>';
+  html += '<div class="pe-mode-card ' + (PE.mode === 'proposal' ? 'active' : '') + '" onclick="setMode(\'proposal\')">';
+  html += '<div class="pe-mode-icon">🏗️</div><div class="pe-mode-title">Proposal Builder Mode</div>';
+  html += '<div class="pe-mode-desc">Build a proposal from scratch with guided inputs and selectable sections.</div></div>';
+  html += '</div>';
+
+  if (PE.mode) {
+    const hasOutput = PE.output || PE.loading;
+    html += '<div class="pe-workspace ' + (hasOutput ? 'split' : '') + '">';
+
+    // Input panel
+    html += '<div class="pe-panel"><div class="pe-panel-header"><span class="pe-panel-title">' + (PE.mode === 'rfp' ? 'RFP Input' : 'Proposal Details') + '</span>';
+    html += '<span style="font-size:0.65rem;font-family:var(--font-mono);padding:0.2rem 0.5rem;border-radius:4px;background:' + d.color + '18;color:' + d.color + '">' + d.icon + ' ' + d.name + '</span>';
+    html += '</div><div class="pe-panel-body">';
+
+    if (PE.mode === 'rfp') {
+      html += '<textarea class="pe-textarea" id="peRfpInput" placeholder="Paste the full RFP text here..." oninput="PE.rfpText=this.value">' + escHtml(PE.rfpText) + '</textarea>';
+      const wc = PE.rfpText.trim() ? PE.rfpText.trim().split(/\s+/).length : 0;
+      html += '<div style="margin-top:0.4rem;font-size:0.7rem;color:var(--text-muted)">' + (wc > 0 ? wc + ' words' : 'Min 50 characters') + '</div>';
+    } else {
+      PE_QUESTIONS.forEach(q => {
+        html += '<div class="pe-field"><label class="pe-label">' + q.label + '</label>';
+        if (q.type === 'textarea') {
+          html += '<textarea class="pe-textarea" style="min-height:70px" placeholder="' + q.placeholder + '" oninput="PE.proposalInputs[\'' + q.id + '\']=this.value">' + escHtml(PE.proposalInputs[q.id] || '') + '</textarea>';
+        } else {
+          html += '<input class="pe-input" placeholder="' + q.placeholder + '" value="' + escHtml(PE.proposalInputs[q.id] || '') + '" oninput="PE.proposalInputs[\'' + q.id + '\']=this.value">';
+        }
+        html += '</div>';
+      });
+      html += '<div class="pe-field"><label class="pe-label">Sections to Include</label><div class="pe-section-chips">';
+      d.sections.forEach(s => {
+        const active = PE.selectedSections.includes(s);
+        html += '<button class="pe-chip ' + (active ? 'active' : '') + '" onclick="toggleSection(\'' + escHtml(s) + '\')">' + (active ? '✓' : '+') + ' ' + s + '</button>';
+      });
+      html += '</div></div>';
+    }
+
+    const canGen = PE.mode === 'rfp' ? PE.rfpText.trim().length > 50 : Object.values(PE.proposalInputs).some(v => v?.trim());
+    html += '<button class="pe-generate-btn" ' + (!canGen || PE.loading ? 'disabled' : '') + ' onclick="peGenerate()">';
+    html += PE.loading ? '⟳ Generating...' : '⚡ ' + (PE.mode === 'rfp' ? 'Generate RFP Response' : 'Build Proposal');
+    html += '</button>';
+
+    if (PE.error) {
+      html += '<div class="pe-error"><strong>Error:</strong> ' + escHtml(PE.error) + '</div>';
+    }
+    html += '</div></div>';
+
+    // Output panel
+    if (hasOutput) {
+      html += '<div class="pe-panel"><div class="pe-panel-header"><span class="pe-panel-title">Generated Output</span><div style="display:flex;gap:0.4rem;align-items:center">';
+      if (PE.loading) {
+        html += '<span class="pe-stream-badge"><span class="pe-pulse">●</span> ' + PE.streamPhase + '</span>';
+      }
+      if (PE.output && !PE.loading) {
+        html += '<button class="pe-copy-btn" onclick="peCopyOutput()">📋 Copy</button>';
+      }
+      html += '</div></div>';
+      html += '<div class="pe-output" id="peOutputContent">' + peMarkdown(PE.output) + (PE.loading ? '<span class="pe-cursor"></span>' : '') + '</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  } else {
+    html += '<div style="text-align:center;padding:4rem 2rem;color:var(--text-muted)">';
+    html += '<div style="font-size:2.5rem;margin-bottom:1rem">↑</div>';
+    html += '<div style="font-family:var(--font-display);font-size:1.2rem;color:var(--text-secondary)">Select a mode to get started</div>';
+    html += '<div style="font-size:0.8rem;margin-top:0.5rem">Choose RFP Response or Proposal Builder above</div></div>';
+  }
+
+  body.innerHTML = html;
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Close on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProposalEngine(); });
+
+// ─── RAG Pipeline ───
+const RAG_DOCS = [
+  {
+    id: 'dtc-overview',
+    title: 'Two-Phase Direct-to-Chip Cooling Overview',
+    category: 'Cooling',
+    content: `Two-phase direct-to-chip (DTC) cooling uses a refrigerant that changes phase from liquid to gas directly at the chip surface, absorbing significantly more heat per unit mass than single-phase liquid cooling. The latent heat of vaporization allows two-phase systems to remove 5-10x more heat per unit flow rate compared to single-phase water-based solutions. Key advantages include: isothermal heat transfer maintaining uniform chip temperatures within 1-2°C across the die, reduced pumping power requirements (up to 90% less than single-phase), and the ability to handle power densities exceeding 1000W/cm². Two-phase DTC systems typically use dielectric refrigerants like R-1233zd(E) or R-1234ze(E) with low global warming potential (GWP < 7). The system operates in a closed loop: subcooled liquid enters the cold plate, absorbs heat and partially evaporates, then flows to a condenser (typically a dry cooler or cooling tower) where the vapor condenses back to liquid. Design considerations include: managing two-phase flow instabilities, ensuring proper vapor-liquid separation, maintaining system pressure within safe operating ranges (typically 1-3 bar), and selecting cold plate microstructure geometry to optimize nucleate boiling. For AI GPU clusters running at 700W+ per GPU (e.g., Nvidia H100/B200), two-phase DTC can maintain junction temperatures below 70°C while enabling rack densities of 80-120kW per rack.`
+  },
+  {
+    id: 'single-vs-two-phase',
+    title: 'Single-Phase vs Two-Phase Cooling Comparison',
+    category: 'Cooling',
+    content: `Single-phase liquid cooling circulates water or water-glycol mixtures through cold plates attached to processors. The coolant absorbs heat sensibly (temperature rises) without changing phase. Typical inlet-outlet temperature deltas are 10-15°C. Single-phase systems are simpler to design and operate, use standard plumbing components, and have decades of data center deployment history. However, they require higher flow rates and larger pumps to handle high heat loads, and the temperature gradient across the cold plate results in non-uniform chip cooling. Two-phase cooling offers superior thermal performance through latent heat absorption, delivering nearly isothermal cooling. A two-phase system can remove 300kW+ per rack with minimal flow rate. The trade-offs: two-phase systems have higher upfront engineering complexity, require specialized refrigerant handling, and demand careful attention to system charging, leak detection, and material compatibility. For deployments under 30kW per rack, single-phase is typically more cost-effective. Between 30-50kW per rack, both approaches are viable. Above 50kW per rack, two-phase DTC becomes the clear winner on total cost of ownership due to reduced infrastructure requirements (smaller pipes, smaller pumps, smaller CDUs, potential elimination of the chilled water loop). Immersion cooling is a third option where entire servers are submerged in dielectric fluid — it handles very high densities but requires purpose-built server hardware and has higher operational complexity.`
+  },
+  {
+    id: 'gpu-cluster-design',
+    title: 'GPU Cluster Infrastructure Design',
+    category: 'GPU Infrastructure',
+    content: `Designing GPU clusters for AI training and inference requires careful attention to power, cooling, networking, and storage. A typical AI training cluster based on Nvidia DGX or HGX platforms draws 8-10kW per node (8 GPUs). A single rack can house 4-8 nodes, resulting in 40-80kW per rack. Nvidia's GB200 NVL72 rack-scale system pushes this to 120kW per rack. Power delivery must account for: high-density PDUs (often 60-100A per rack), busway distribution for flexibility, generator backup with <10 second transfer times, and UPS sizing for graceful shutdown (not sustained runtime). Network design centers on high-bandwidth, low-latency GPU-to-GPU communication. InfiniBand NDR (400Gbps) or Ethernet (400/800GbE with RoCE) fabrics connect GPUs in a non-blocking fat-tree or rail-optimized topology. NVLink/NVSwitch provides intra-node GPU communication at 900GB/s per GPU. Storage must sustain sequential read throughput matching GPU memory bandwidth for checkpoint loading. Parallel file systems (Lustre, GPFS/Spectrum Scale, VAST Data, WekaIO) or object stores with high-throughput caching deliver the required IOPS and bandwidth. A 1000-GPU cluster typically needs 200-400GB/s aggregate storage throughput for training workloads.`
+  },
+  {
+    id: 'pue-optimization',
+    title: 'PUE and Data Center Efficiency',
+    category: 'Data Center',
+    content: `Power Usage Effectiveness (PUE) measures data center efficiency as total facility power divided by IT equipment power. Industry average PUE is approximately 1.58, while hyperscale facilities achieve 1.10-1.20. For AI-dense facilities, cooling can represent 30-40% of total power if using traditional air cooling. Liquid cooling (single-phase or two-phase) dramatically reduces cooling overhead. Two-phase DTC systems can achieve a cooling PUE contribution of 0.02-0.05 (vs 0.3-0.5 for air cooling), bringing total PUE below 1.10. Key strategies for PUE optimization include: raising supply water temperatures to enable free cooling for more hours per year, implementing hot aisle/cold aisle containment, using variable-speed drives on all fans and pumps, deploying economizer modes (airside and waterside) based on ambient conditions, and recovering waste heat for facility heating or district energy. For a 100MW AI factory, reducing PUE from 1.3 to 1.1 saves approximately 20MW of cooling overhead — at $0.06/kWh, that represents over $10M annually in electricity savings. Liquid-cooled facilities also benefit from reduced air handling infrastructure, smaller generators, and smaller electrical distribution, reducing capital expenditure by 15-25%.`
+  },
+  {
+    id: 'enterprise-storage-arch',
+    title: 'Enterprise Storage Architecture Patterns',
+    category: 'Storage',
+    content: `Modern enterprise storage architectures span block, file, and object tiers, often unified on a single platform. All-flash arrays (AFA) using NVMe SSDs deliver sub-100 microsecond latency for transactional workloads. Leading platforms include Dell PowerStore, NetApp AFF A-Series, Pure Storage FlashArray, and IBM FlashSystem. Key architecture decisions include: SAN vs NAS vs unified, FC vs iSCSI vs NVMe-oF for block access, and scale-up vs scale-out models. Scale-out NAS/file systems like NetApp ONTAP, Dell PowerScale (Isilon), VAST Data Universal Storage, and WekaIO handle unstructured data at petabyte scale. For AI and HPC workloads, parallel file systems (Lustre, GPFS) or purpose-built platforms (VAST, Weka) provide the throughput needed for GPU-accelerated training. Data protection architectures include: synchronous replication for zero RPO (metro distances <100km), asynchronous replication for DR (RPO of minutes to hours), snapshot-based backup with immutable copies for ransomware protection, and air-gapped or isolated recovery environments (cyber vaults). Storage networking best practices: use dedicated storage VLANs, implement jumbo frames (9000 MTU) for iSCSI/NFS, deploy multipathing (MPIO/ALUA) for redundancy, and size for peak IOPS plus 30% headroom.`
+  },
+  {
+    id: 'kubernetes-storage',
+    title: 'Kubernetes and Persistent Storage',
+    category: 'Kubernetes',
+    content: `Kubernetes manages persistent storage through the Container Storage Interface (CSI), which provides a standard API for storage vendors to integrate with K8s. PersistentVolumes (PV) represent physical storage resources, while PersistentVolumeClaims (PVC) are requests for storage by pods. StorageClasses define different tiers of storage (e.g., fast-ssd, standard-hdd, replicated-nfs) and enable dynamic provisioning. For stateful workloads like databases, StatefulSets maintain stable network identities and persistent storage across pod restarts and rescheduling. Key considerations: volume access modes (ReadWriteOnce, ReadWriteMany, ReadOnlyMany) determine sharing capabilities. ReadWriteMany (RWX) requires NFS, CephFS, or similar shared filesystems. Storage topology awareness ensures pods are scheduled on nodes with access to their volumes, critical in multi-zone clusters. CSI snapshots enable point-in-time backups of persistent volumes. Volume expansion allows growing PVCs without downtime. For AI/ML on Kubernetes, storage performance is critical: training jobs need high sequential throughput (GB/s), while serving/inference needs low latency random reads. Solutions like VAST Data CSI, Weka CSI, and Portworx provide enterprise-grade persistent storage for K8s with features like replication, snapshots, and encryption.`
+  },
+  {
+    id: 'cloud-architecture',
+    title: 'Cloud Architecture Best Practices',
+    category: 'Cloud',
+    content: `Cloud architecture follows well-architected framework principles across operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability. For enterprise workloads on AWS or GCP, foundational patterns include: multi-account/multi-project organization with centralized billing and IAM, landing zone automation using Terraform or Pulumi, network architecture with hub-spoke VPC/VNet topology and transit gateways, and defense-in-depth security with WAF, GuardDuty/Security Command Center, and KMS encryption. High availability requires: multi-AZ deployment for all stateful services, auto-scaling groups with health checks and graceful draining, database replication (RDS Multi-AZ, Cloud SQL HA), and cross-region DR with defined RTO/RPO targets. Kubernetes on cloud (EKS, GKE) should use managed node groups, cluster autoscaler or Karpenter, and pod disruption budgets. Cost optimization strategies include: reserved instances or committed use discounts (1-3 year), spot/preemptible instances for fault-tolerant workloads, right-sizing recommendations from cloud advisor tools, and implementing FinOps practices with tagging, budgets, and anomaly detection. For AI workloads, cloud GPU instances (P5, A3, G2) provide on-demand access to accelerated computing without capital investment, but sustained training should evaluate reserved pricing or dedicated hosts.`
+  },
+  {
+    id: 'data-protection',
+    title: 'Data Protection and Disaster Recovery',
+    category: 'Storage',
+    content: `Enterprise data protection follows the 3-2-1-1-0 rule: maintain 3 copies of data, on 2 different media types, with 1 offsite copy, 1 immutable or air-gapped copy, and 0 errors (verified through automated restore testing). Recovery objectives drive architecture decisions: RPO (Recovery Point Objective) defines maximum acceptable data loss, while RTO (Recovery Time Objective) defines maximum acceptable downtime. Tier 1 applications (ERP, trading, core databases) typically require RPO < 1 hour and RTO < 4 hours, often achieved through synchronous replication and automated failover. Snapshot-based backup provides application-consistent recovery points. Modern platforms support crash-consistent snapshots every 15-30 minutes with minimal performance impact. For ransomware protection, immutable snapshots with WORM (Write Once Read Many) compliance prevent deletion or modification during a retention period. Cyber vault architectures use isolated networks with air-gapped or restricted access recovery environments, automated data synchronization on narrow time windows, and malware scanning of backup data before recovery. Cloud-based DR uses pilot light or warm standby patterns: maintain minimal infrastructure in DR region, replicate data continuously, and automate scale-up through infrastructure-as-code during failover events.`
+  },
+  {
+    id: 'ai-factory-power',
+    title: 'AI Factory Power and Electrical Design',
+    category: 'Data Center',
+    content: `AI factory power design starts with understanding the total IT load and scaling up through the electrical distribution chain. A 100MW AI facility requires: utility feeds at medium voltage (13.8-34.5kV) with redundant substations, step-down transformers to 480V for IT distribution, and UPS systems for power continuity. Generator capacity typically matches the full IT load plus cooling and support systems. Modern AI factories are moving toward 48VDC rack-level power distribution to reduce conversion losses — eliminating the AC-DC-AC conversion stages present in traditional UPS architectures can improve electrical efficiency by 3-5%. Battery energy storage systems (BESS) are increasingly deployed alongside or instead of diesel generators, providing cleaner backup power and grid stabilization. For a 50MW GPU cluster running Nvidia B200 GPUs at 1000W each, you need approximately 50,000 GPUs. At 72 GPUs per rack (GB200 NVL72 configuration), that is roughly 700 racks requiring 84MW of IT power (including networking and storage), 8-15MW of cooling power (depending on cooling technology), and 5-8MW of facility support systems. Power density per rack reaches 120kW, requiring high-capacity busway distribution, high-density PDUs rated at 100A+ per rack, and careful phase balancing across the electrical system.`
+  },
+  {
+    id: 'nvme-storage',
+    title: 'NVMe and NVMe-oF Storage Architecture',
+    category: 'Storage',
+    content: `NVMe (Non-Volatile Memory Express) is the dominant protocol for flash storage, replacing SCSI/SAS with a streamlined command set designed for parallelism. NVMe supports 65,535 I/O queues with 65,536 commands per queue, compared to SAS's single queue of 254 commands. This enables sub-50 microsecond latency and millions of IOPS from a single SSD. NVMe-over-Fabrics (NVMe-oF) extends NVMe semantics across a network fabric, supporting RDMA (RoCE, iWARP, InfiniBand) and TCP transports. NVMe/TCP requires no special network hardware, making it accessible for brownfield deployments over existing Ethernet infrastructure. NVMe/RoCE provides the lowest latency (~10 microseconds) but requires lossless Ethernet with PFC/ECN configuration. Key design considerations for NVMe-oF deployments: use dedicated storage networks with adequate bandwidth (25GbE minimum, 100GbE recommended), implement multipath with ANA (Asymmetric Namespace Access) for redundancy, size host queue depths based on workload characteristics, and monitor NVMe controller memory buffer utilization. For AI training workloads, NVMe-oF enables disaggregated storage architectures where compute nodes access shared NVMe flash pools over the network, enabling independent scaling of compute and storage tiers.`
+  }
+];
+
+// TF-IDF Vector Search Implementation
+const RAG = {
+  vocabulary: {},
+  idfValues: {},
+  docVectors: [],
+  initialized: false
+};
+
+function ragInitialize() {
+  if (RAG.initialized) return;
+
+  // Build vocabulary from all documents
+  const docTokens = RAG_DOCS.map(doc => ragTokenize(doc.title + ' ' + doc.content));
+  const allTokens = new Set();
+  docTokens.forEach(tokens => tokens.forEach(t => allTokens.add(t)));
+
+  let idx = 0;
+  allTokens.forEach(token => { RAG.vocabulary[token] = idx++; });
+
+  // Calculate IDF
+  const N = RAG_DOCS.length;
+  allTokens.forEach(token => {
+    const df = docTokens.filter(tokens => tokens.includes(token)).length;
+    RAG.idfValues[token] = Math.log((N + 1) / (df + 1)) + 1;
+  });
+
+  // Build TF-IDF vectors for each document
+  RAG.docVectors = docTokens.map(tokens => {
+    const tf = {};
+    tokens.forEach(t => { tf[t] = (tf[t] || 0) + 1; });
+    const maxTf = Math.max(...Object.values(tf));
+    const vector = {};
+    Object.keys(tf).forEach(t => {
+      vector[t] = (tf[t] / maxTf) * (RAG.idfValues[t] || 0);
+    });
+    return vector;
+  });
+
+  RAG.initialized = true;
+}
+
+function ragTokenize(text) {
+  return text.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .split(/\s+/)
+    .filter(t => t.length > 2)
+    .filter(t => !['the','and','for','with','that','this','from','are','was','has','have','can','its','also','but','not','use','per','via'].includes(t));
+}
+
+function ragCosineSim(vecA, vecB) {
+  let dot = 0, magA = 0, magB = 0;
+  const allKeys = new Set([...Object.keys(vecA), ...Object.keys(vecB)]);
+  allKeys.forEach(k => {
+    const a = vecA[k] || 0;
+    const b = vecB[k] || 0;
+    dot += a * b;
+    magA += a * a;
+    magB += b * b;
+  });
+  if (magA === 0 || magB === 0) return 0;
+  return dot / (Math.sqrt(magA) * Math.sqrt(magB));
+}
+
+function ragSearch(query, topK = 3) {
+  ragInitialize();
+  const queryTokens = ragTokenize(query);
+  const tf = {};
+  queryTokens.forEach(t => { tf[t] = (tf[t] || 0) + 1; });
+  const maxTf = Math.max(...Object.values(tf), 1);
+  const queryVector = {};
+  Object.keys(tf).forEach(t => {
+    queryVector[t] = (tf[t] / maxTf) * (RAG.idfValues[t] || 0);
+  });
+
+  const scored = RAG_DOCS.map((doc, i) => ({
+    doc,
+    score: ragCosineSim(queryVector, RAG.docVectors[i])
+  }));
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, topK).filter(s => s.score > 0.05);
+}
+
+function ragRenderMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li style="margin:0.2rem 0">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, m => '<ul style="margin:0.4rem 0 0.6rem 1rem">'+m+'</ul>')
+    .replace(/\n\n/g, '</p><p style="margin:0.5rem 0">')
+    .replace(/\n/g, '<br/>');
+}
+
+let ragLoading = false;
+
+async function ragAsk(presetQuestion) {
+  if (ragLoading) return;
+
+  const input = document.getElementById('ragInput');
+  const query = presetQuestion || input.value.trim();
+  if (!query) return;
+
+  ragLoading = true;
+  input.value = '';
+  document.getElementById('ragSend').disabled = true;
+
+  const chat = document.getElementById('ragChat');
+  // Remove welcome on first message
+  const welcome = chat.querySelector('.rag-welcome');
+  if (welcome) welcome.remove();
+
+  // Add user message
+  chat.innerHTML += '<div class="rag-msg rag-msg-user"><div class="rag-bubble">' + escHtml(query) + '</div></div>';
+
+  // Search
+  const results = ragSearch(query);
+  const context = results.map(r => '### ' + r.doc.title + ' [' + r.doc.category + ']\n' + r.doc.content).join('\n\n---\n\n');
+
+  // Add streaming AI message
+  const msgId = 'rag-ai-' + Date.now();
+  chat.innerHTML += '<div class="rag-msg rag-msg-ai" id="' + msgId + '"><div class="rag-bubble"><span class="pe-cursor"></span></div></div>';
+  chat.scrollTop = chat.scrollHeight;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        stream: true,
+        system: 'You are an expert AI infrastructure consultant with 20+ years of experience in data centers, storage, cooling, and cloud architecture. Answer questions using ONLY the provided context documents. Be specific, cite numbers and technical details from the context. If the context doesn\'t contain relevant information, say so. Keep responses concise but thorough — aim for 150-300 words. Use markdown bold for key terms.',
+        messages: [{ role: 'user', content: 'Context documents:\n\n' + context + '\n\n---\n\nQuestion: ' + query }]
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'API error');
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullText = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const json = line.slice(6).trim();
+          if (json === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(json);
+            if (evt.type === 'content_block_delta' && evt.delta?.text) {
+              fullText += evt.delta.text;
+              const el = document.getElementById(msgId);
+              if (el) {
+                const bubble = el.querySelector('.rag-bubble');
+                bubble.innerHTML = ragRenderMarkdown(fullText) + '<span class="pe-cursor"></span>';
+                chat.scrollTop = chat.scrollHeight;
+              }
+            }
+          } catch {}
+        }
+      }
+    }
+
+    // Finalize — add sources
+    const el = document.getElementById(msgId);
+    if (el) {
+      const bubble = el.querySelector('.rag-bubble');
+      let sourcesHtml = '<div class="rag-sources"><div class="rag-sources-label">Retrieved from</div>';
+      results.forEach(r => {
+        sourcesHtml += '<span class="rag-source-tag">' + r.doc.category + ': ' + escHtml(r.doc.title) + ' (' + (r.score * 100).toFixed(0) + '% match)</span> ';
+      });
+      sourcesHtml += '</div>';
+      bubble.innerHTML = ragRenderMarkdown(fullText) + sourcesHtml;
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+  } catch (err) {
+    const el = document.getElementById(msgId);
+    if (el) {
+      el.querySelector('.rag-bubble').innerHTML = '<span style="color:#fca5a5">Error: ' + escHtml(err.message) + '</span>';
+    }
+  } finally {
+    ragLoading = false;
+    document.getElementById('ragSend').disabled = false;
+  }
+}
+</script>
+</body>
+</html>
