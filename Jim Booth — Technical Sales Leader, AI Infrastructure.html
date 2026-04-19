@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jim Booth — Technical Sales Leader, AI Infrastructure</title>
+<meta name="description" content="Twenty years translating complex infrastructure into enterprise revenue. Denver, Colorado.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Cool, extremely-light neutral palette */
+    --paper:       #F4F5F7;
+    --paper-deep:  #EDEEF1;
+    --ink:         #0E1014;
+    --ink-soft:    #545963;
+    --ink-softer:  #9095A0;
+    --rule:        #DFE2E7;
+    --rule-soft:   #E8EAEE;
+
+    --fs-sans:     'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --fs-mono:     'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--fs-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+  }
+
+  /* ─── Header ─────────────────────────────────────── */
+  header.top {
+    padding: 2rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.25rem;
+    margin-bottom: 7rem;
+  }
+
+  .wordmark {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .wordmark em {
+    font-style: normal;
+    color: var(--ink-softer);
+    font-weight: 400;
+    font-family: var(--fs-mono);
+    font-size: 0.82rem;
+    margin-left: 0.35rem;
+    letter-spacing: 0;
+  }
+
+  nav.primary {
+    display: flex;
+    gap: 2.25rem;
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+  }
+  nav.primary a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    position: relative;
+  }
+  nav.primary a:hover { color: var(--ink); }
+
+  /* ─── Hero ───────────────────────────────────────── */
+  .hero {
+    padding-bottom: 8rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 8rem;
+  }
+
+  .locus {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 3rem;
+  }
+  .locus .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink);
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+  @keyframes subtle-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  h1.lead {
+    font-family: var(--fs-sans);
+    font-weight: 300;
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    max-width: 20ch;
+    margin-bottom: 3rem;
+  }
+  h1.lead .dim {
+    color: var(--ink-soft);
+  }
+  h1.lead .mark {
+    font-weight: 500;
+    position: relative;
+    color: var(--ink);
+  }
+  h1.lead .mark::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.12em;
+    height: 0.06em;
+    background: var(--ink);
+  }
+
+  .hero-body {
+    max-width: 58ch;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 3.5rem;
+    font-weight: 400;
+  }
+  .hero-body strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Stats as ledger */
+  .ledger {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--rule);
+    max-width: 900px;
+  }
+  .ledger-item .k {
+    font-family: var(--fs-sans);
+    font-weight: 400;
+    font-size: 1.95rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 0.55rem;
+  }
+  .ledger-item .v {
+    font-family: var(--fs-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-softer);
+  }
+
+  /* ─── Section shell ──────────────────────────────── */
+  section {
+    padding-bottom: 8rem;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: baseline;
+  }
+  .section-label {
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-softer);
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--ink);
+    align-self: start;
+    display: inline-block;
+    padding-right: 2rem;
+  }
+  .section-title {
+    font-family: var(--fs-sans);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 22ch;
+    color: var(--ink);
+  }
+  .section-title .dim {
+    color: var(--ink-soft);
+    font-weight: 300;
+  }
+
+  /* ─── Work ───────────────────────────────────────── */
+  .work-list { display: flex; flex-direction: column; }
+  .role {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--rule);
+    transition: background 0.3s ease;
+  }
+  .role:hover { background: var(--paper-deep); }
+  .role:last-child { border-bottom: 1px solid var(--rule); }
+
+  .role .period {
+    font-family: var(--fs-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-softer);
+    padding-top: 0.35rem;
+  }
+  .role .company {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .role .title {
+    font-family: var(--fs-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+  }
+  .role .note {
+    max-width: 58ch;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    font-size: 0.98rem;
+  }
+  .role .note strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ─── Expertise ──────────────────────────────────── */
+  .expertise {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+  .exp-item {
+    padding: 2.5rem 0 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .exp-item:nth-child(odd)  { padding-right: 3rem; }
+  .exp-item:nth-child(even) {
+    padding-left: 3rem;
+    border-left: 1px solid var(--rule);
+  }
+  .exp-item h3 {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.9rem;
+    color: var(--ink);
+  }
+  .exp-item p {
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    max-width: 48ch;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .exp-item .tags {
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-softer);
+  }
+
+  /* ─── Now ────────────────────────────────────────── */
+  .now-list { display: flex; flex-direction: column; }
+  .now-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    padding: 2.25rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .now-item:last-child { border-bottom: 1px solid var(--rule); }
+  .now-status {
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .now-status .pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  .now-status.queued .pulse {
+    background: transparent;
+    border: 1px solid var(--ink-softer);
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.25); }
+  }
+
+  .now-item h3 {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .now-item p {
+    color: var(--ink-soft);
+    max-width: 60ch;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* ─── Credentials ────────────────────────────────── */
+  .creds {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .creds-label {
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-softer);
+  }
+  .creds-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .cred {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: baseline;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cred:first-child { padding-top: 0; }
+  .cred:last-child { border-bottom: none; padding-bottom: 0; }
+  .cred .what {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .cred .who {
+    font-family: var(--fs-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-softer);
+    text-transform: uppercase;
+  }
+
+  /* ─── Contact ────────────────────────────────────── */
+  .contact {
+    padding: 6rem 0 4rem;
+    border-top: 1px solid var(--ink);
+    margin-top: 2rem;
+  }
+  .contact-lead {
+    font-family: var(--fs-sans);
+    font-weight: 300;
+    font-size: clamp(1.85rem, 4.2vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+    margin-bottom: 3rem;
+    color: var(--ink);
+  }
+  .contact-lead .dim {
+    color: var(--ink-soft);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .contact-field .label {
+    font-family: var(--fs-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-softer);
+    margin-bottom: 0.75rem;
+  }
+  .contact-field a {
+    font-family: var(--fs-sans);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.015em;
+    transition: color 0.25s ease;
+    display: inline-block;
+    position: relative;
+  }
+  .contact-field a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: var(--ink-softer);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.7, 0, 0.3, 1), background 0.25s ease;
+  }
+  .contact-field a:hover::after {
+    background: var(--ink);
+    transform: scaleX(1.02);
+  }
+
+  /* ─── Footer ─────────────────────────────────────── */
+  footer.bottom {
+    padding: 3rem 0 2.5rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 6rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-softer);
+  }
+  footer.bottom a { color: inherit; text-decoration: none; transition: color 0.25s ease; }
+  footer.bottom a:hover { color: var(--ink); }
+
+  /* ─── Mobile ─────────────────────────────────────── */
+  @media (max-width: 780px) {
+    body { font-size: 15px; }
+    .wrap { padding: 0 1.5rem; }
+
+    header.top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+    nav.primary { gap: 1.5rem; flex-wrap: wrap; font-size: 0.68rem; }
+
+    .hero { padding-bottom: 5rem; margin-bottom: 5rem; }
+    h1.lead { max-width: 100%; margin-bottom: 2rem; }
+    .ledger { grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+
+    .section-head,
+    .role,
+    .now-item,
+    .creds {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .section-head { margin-bottom: 2.5rem; }
+
+    .expertise { grid-template-columns: 1fr; }
+    .exp-item { padding: 2rem 0; }
+    .exp-item:nth-child(odd)  { padding-right: 0; }
+    .exp-item:nth-child(even) { padding-left: 0; border-left: none; }
+
+    .contact-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    footer.bottom { flex-direction: column; gap: 0.75rem; }
+    section { padding-bottom: 5rem; }
+  }
+
+  /* ─── Entrance ───────────────────────────────────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+  }
+  .fade-up.d1 { animation-delay: 0.05s; }
+  .fade-up.d2 { animation-delay: 0.18s; }
+  .fade-up.d3 { animation-delay: 0.32s; }
+  .fade-up.d4 { animation-delay: 0.48s; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up, .now-status .pulse, .locus .dot {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="top">
+    <a href="#" class="wordmark">Jim Booth<em>Technical Sales Leader</em></a>
+    <nav class="primary">
+      <a href="#work">Work</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#now">Now</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="locus fade-up d1">
+      <span class="dot"></span>
+      <span>Denver, Colorado</span>
+      <span style="color: var(--ink-softer);">·</span>
+      <span>Available for senior roles</span>
+    </div>
+
+    <h1 class="lead fade-up d2">
+      I know the technology.<br>
+      <span class="dim">I build the trust.</span><br>
+      I <span class="mark">close</span> the deal.
+    </h1>
+
+    <p class="hero-body fade-up d3">
+      Twenty years translating complex infrastructure — from storage arrays to
+      AI cooling to GPU clusters — into language that lands with engineers and
+      C-suites alike. I build transformers in <strong>PyTorch</strong>, architect
+      data-center solutions, and earn the technical credibility that turns
+      prospects into partners.
+    </p>
+
+    <div class="ledger fade-up d4">
+      <div class="ledger-item">
+        <div class="k">8-figure</div>
+        <div class="v">Pipeline closed</div>
+      </div>
+      <div class="ledger-item">
+        <div class="k">300 MW</div>
+        <div class="v">AI cooling deployed</div>
+      </div>
+      <div class="ledger-item">
+        <div class="k">−30%</div>
+        <div class="v">Sales-cycle reduction</div>
+      </div>
+      <div class="ledger-item">
+        <div class="k">127%</div>
+        <div class="v">Quota attainment</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <header class="section-head">
+      <span class="section-label">Work</span>
+      <h2 class="section-title">Where I've <span class="dim">closed.</span></h2>
+    </header>
+
+    <div class="work-list">
+
+      <article class="role">
+        <div class="period">2024 — 2026</div>
+        <div>
+          <h3 class="company">Accelsius</h3>
+          <div class="title">Sr. Solution Architect</div>
+          <p class="note">
+            Primary technical closer on the company's largest deal —
+            <strong>300 MW of AI-factory cooling</strong>. Promoted within five
+            months. Built twenty-plus technical assets and thirty-plus
+            proposals, reducing average sales cycle by roughly a third. Presented
+            from engineering workbench to C-suite boardroom.
+          </p>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="period">2022 — 2024</div>
+        <div>
+          <h3 class="company">SADA <span style="color: var(--ink-softer); font-size: 0.8em; font-weight: 400;">(Insight)</span></h3>
+          <div class="title">Sr. Cloud Engineer</div>
+          <p class="note">
+            Architected scalable HA solutions on Google Cloud Platform. Led
+            infrastructure assessments and delivered prescriptive roadmaps that
+            accelerated cloud adoption for mid-market and enterprise accounts.
+            Mentored junior engineers on sales strategy and POC execution.
+          </p>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="period">2013 — 2022</div>
+        <div>
+          <h3 class="company">Cisco Systems</h3>
+          <div class="title">Technical Solution Architect, Cloud</div>
+          <p class="note">
+            US West Region technical lead and primary closer. Drove adoption of
+            hyper-converged infrastructure. Spearheaded Kubernetes and
+            cloud-native mentorship across the engineering organization.
+            Executed high-stakes POCs with custom automation.
+          </p>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="period">1995 — 2013</div>
+        <div>
+          <h3 class="company">NetApp · IBM · EMC · Veritas</h3>
+          <div class="title">Systems Engineering &amp; Technical Leadership</div>
+          <p class="note">
+            Senior SE and architect roles across the major enterprise storage
+            platforms — all-flash arrays, XIV, Symmetrix, CLARiiON. Managing
+            Director of Systems Engineering at CreekPath. Technical Product
+            Manager at Veritas. <strong>127% quota · $10M+ territory.</strong>
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Expertise -->
+  <section id="expertise">
+    <header class="section-head">
+      <span class="section-label">Expertise</span>
+      <h2 class="section-title">What I bring <span class="dim">to the table.</span></h2>
+    </header>
+
+    <div class="expertise">
+
+      <div class="exp-item">
+        <h3>AI Infrastructure &amp; Cooling</h3>
+        <p>
+          GPU-dense data-center design, two-phase direct-to-chip cooling, and
+          the power / thermal trade-offs that define AI-factory economics.
+        </p>
+        <div class="tags">Two-phase DTC · NVIDIA · AMD · 300 MW+ deployed</div>
+      </div>
+
+      <div class="exp-item">
+        <h3>AI &amp; Machine Learning</h3>
+        <p>
+          Stanford ML specialization. Hands-on with LLM internals — transformers
+          from scratch, embeddings, attention mechanics. Building it, not just
+          talking about it.
+        </p>
+        <div class="tags">PyTorch · Transformers · RAG · Claude &amp; GPT</div>
+      </div>
+
+      <div class="exp-item">
+        <h3>Cloud &amp; Infrastructure</h3>
+        <p>
+          Triple AWS-certified. Production experience across GCP and AWS with
+          Kubernetes, serverless, and hybrid architectures for enterprise
+          workloads.
+        </p>
+        <div class="tags">AWS (SA · Dev · SysOps) · GCP · Kubernetes · Linux</div>
+      </div>
+
+      <div class="exp-item">
+        <h3>Enterprise Storage</h3>
+        <p>
+          Twenty years across every major platform — EMC, NetApp, IBM XIV,
+          Cisco HyperFlex. From Symmetrix frames to all-flash arrays to
+          hyper-converged.
+        </p>
+        <div class="tags">EMC · NetApp · IBM · HCI · Data protection</div>
+      </div>
+
+      <div class="exp-item">
+        <h3>Technical Sales &amp; Closing</h3>
+        <p>
+          The rare engineer who runs a POC on Monday and presents to a CTO on
+          Tuesday. Challenger methodology with a track record of outsized quota
+          attainment.
+        </p>
+        <div class="tags">Challenger Sale · POC execution · RFP / RFI</div>
+      </div>
+
+      <div class="exp-item">
+        <h3>Development &amp; Automation</h3>
+        <p>
+          Production code, not just slides. Custom tooling for sales
+          automation, data-protection workflows, and AI-assisted proposals.
+        </p>
+        <div class="tags">Python · C · Swift · Claude Code</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Now -->
+  <section id="now">
+    <header class="section-head">
+      <span class="section-label">Now</span>
+      <h2 class="section-title">What I'm <span class="dim">building.</span></h2>
+    </header>
+
+    <div class="now-list">
+
+      <article class="now-item">
+        <div class="now-status"><span class="pulse"></span>Live</div>
+        <div>
+          <h3>Proposal Engine</h3>
+          <p>
+            AI-powered RFP response generator with multi-domain templates for
+            cooling, storage, and cloud. Reduces proposal draft time from days
+            to hours.
+          </p>
+        </div>
+      </article>
+
+      <article class="now-item">
+        <div class="now-status"><span class="pulse"></span>In progress</div>
+        <div>
+          <h3>GPU Cluster Cost Optimizer</h3>
+          <p>
+            TCO modelling across air, single-phase, and two-phase DTC cooling
+            for GPU-dense deployments. Quantifies the cost-per-flop curve that
+            most operators get wrong.
+          </p>
+        </div>
+      </article>
+
+      <article class="now-item">
+        <div class="now-status"><span class="pulse"></span>In progress</div>
+        <div>
+          <h3>LLM From Scratch</h3>
+          <p>
+            A transformer-based language model built from the ground up in
+            PyTorch — tokenizer, attention, training loop. Understanding every
+            layer of the stack I sell.
+          </p>
+        </div>
+      </article>
+
+      <article class="now-item">
+        <div class="now-status queued"><span class="pulse"></span>Upcoming</div>
+        <div>
+          <h3>VAST Data Platform Deep Dive</h3>
+          <p>
+            Starting at VAST Data soon — going deep on the Universal Storage
+            architecture: DASE, VMS, multiprotocol access, data protection, and
+            Kubernetes CSI integration. Building toward VASTronaut certification.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section id="credentials">
+    <header class="section-head">
+      <span class="section-label">Credentials</span>
+      <h2 class="section-title">Formal <span class="dim">training.</span></h2>
+    </header>
+
+    <div class="creds">
+      <span class="creds-label">Education &amp; Certifications</span>
+      <div class="creds-body">
+        <div class="cred">
+          <span class="what">B.S. Computer Engineering</span>
+          <span class="who">Kansas State University</span>
+        </div>
+        <div class="cred">
+          <span class="what">Machine Learning Specialization</span>
+          <span class="who">Stanford University</span>
+        </div>
+        <div class="cred">
+          <span class="what">AWS Solutions Architect</span>
+          <span class="who">Amazon Web Services</span>
+        </div>
+        <div class="cred">
+          <span class="what">AWS Certified Developer</span>
+          <span class="who">Amazon Web Services</span>
+        </div>
+        <div class="cred">
+          <span class="what">AWS SysOps Administrator</span>
+          <span class="who">Amazon Web Services</span>
+        </div>
+        <div class="cred">
+          <span class="what">Certified Cicerone — Beer Judge</span>
+          <span class="who">Cicerone Certification Program</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <h2 class="contact-lead">
+      Building something <span class="dim">infrastructure-heavy?</span> Let's talk.
+    </h2>
+
+    <div class="contact-grid">
+      <div class="contact-field">
+        <div class="label">Email</div>
+        <a href="mailto:jimbooth@me.com">jimbooth@me.com</a>
+      </div>
+      <div class="contact-field">
+        <div class="label">LinkedIn</div>
+        <a href="https://linkedin.com/in/jimbooth" target="_blank" rel="noopener">linkedin.com/in/jimbooth</a>
+      </div>
+      <div class="contact-field">
+        <div class="label">Phone</div>
+        <a href="tel:3039816276">303.981.6276</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bottom">
+    <span>© Jim Booth · 2026</span>
+    <span>Denver, CO · 39.7°N 104.9°W</span>
+    <a href="https://endur.dev/Jim_Booth_Resume.pdf">Resume ↗</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
