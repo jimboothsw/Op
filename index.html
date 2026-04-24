@@ -367,6 +367,34 @@
     font-size: 0.95rem;
     line-height: 1.6;
   }
+  
+  .screenshot {
+    margin-top: 1.75rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #0E1014;
+    max-width: 820px;  
+    box-shadow: 0 2px 16px rgba(14, 16, 20, 0.06);
+  }
+  .screenshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .screenshot figcaption {
+    padding: 0.7rem 1rem;
+    font-family: var(--fs-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-softer);
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  @media (max-width: 780px) {   
+    .screenshot { margin-top: 1.25rem; }
+    .screenshot figcaption { font-size: 0.68rem; padding: 0.6rem 0.8rem; }
+  }
 
   /* ─── Credentials ────────────────────────────────── */
   .creds {
