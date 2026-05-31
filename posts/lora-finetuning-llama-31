@@ -1,0 +1,102 @@
+Jim BoothPortfolio
+PROJECTS
+EXPERIENCE
+CONTACT
+BACK TO PROJECTS
+NOTES · RESEARCH · 2026
+Fine-Tuning Llama-3.1 for AI Infrastructure
+A diagnostic — when LoRA loses to the pretraining prior, and what that means for fine-tune vs RAG decisions.
+MAY 2026
+·
+~9 MIN READ
+·
+LLAMA-3.1 · LORA · NEMO
+TL;DR
+I fine-tuned Llama-3.1-8B on a synthetic AI-infrastructure Q&A dataset. Single H100 on Brev, 22 seconds of wall clock, 0.52% of parameters touched via rank-16 LoRA. Loss came down cleanly. Eval numbers were fine.
+Then I asked the tuned model to explain CDU sizing for a 150 kW GPU rack — a domain I know well from selling 300 MW of two-phase cooling at Accelsius. It answered with PDU concepts: inrush current, electrical overload, phase balance. Pure category error.
+This post is about why that happened, how I diagnosed it, and what I'm taking forward about when to fine-tune versus when to RAG.
+The setup
+The hypothesis was simple: how much can a small, fast LoRA fine-tune shift a general-purpose model toward a specialized domain? Not change its facts — change its behavior. Its terminology, its formatting, the shape of its answers.
+I built a synthetic Q&A dataset on AI infrastructure topics — GPU density, cooling architectures, network fabrics, storage tiering, the economics of AI factories. Around two hundred examples, hand-written and LLM-augmented, with five clean examples specifically on coolant distribution units (CDUs) — the thermal-side counterpart to power distribution units (PDUs) in a high-density rack.
+The fine-tune itself was deliberately minimal. Unsloth for the training loop, PEFT for the LoRA adapters, a single H100 80GB provisioned on Brev. Standard rank-16 configuration, learning rate 2e-4, batch size 8, three epochs.
+Base model
+Llama-3.1-8B-Instruct
+Adapter
+LoRA · rank 16 · alpha 32
+Params touched
+0.52% of total
+Hardware
+1× H100 80GB · Brev
+LR / Batch
+2e-4 / 8
+Steps · Wall time
+18 · 22 sec
+Training behaved well. Loss dropped from 2.86 to 1.34 across three epochs and was still trending down at the cutoff — could have trained longer, but I wanted to see how much signal even a minimal run produced.
+￼
+Fig. 01 · Training loss across 18 optimizer steps. 22 seconds of wall clock.
+The diagnostic
+After training, I ran my validation prompts. Most read fine — the model sounded more confident on AI infrastructure topics, structured responses better, used the right vocabulary. Encouraging.
+Then I asked it to walk me through CDU sizing for a 150 kW GPU rack. I know this topic cold. Coolant Distribution Units are thermal devices — you size them by flow rate (liters per minute), temperature delta (the ΔT between supply and return), pressure drop across the rack, and heat rejection capacity (kilowatts thermal, not electrical).
+The model's answer talked about inrush current. Phase balance. Overload protection. Breaker sizing. Every concept it reached for was electrical. It was sizing a PDU — a Power Distribution Unit — not a CDU.
+￼
+Fig. 02 · The model conflated PDU (electrical) and CDU (thermal). Both bolt onto the same rack. They solve different problems.
+This wasn't a knowledge gap. The model had seen five clean CDU examples in training. The information was in there. It was a category error — and a confident one. The model didn't hedge. It produced a fluent, structured, completely-wrong answer.
+The diagnosis is straightforward once you say it out loud. Llama-3.1's pretraining corpus contains millions of co-occurrences of the phrase pattern sizing + kW + rack bound to electrical concepts. Data centers as an industry have been an electrical-engineering problem for forty years. The semantic gravity of that prior is enormous.
+My five examples saw eighteen optimizer steps. The prior won by orders of magnitude.
+What fine-tuning
+actually
+changed
+The interesting follow-up question is what the LoRA did change. Comparing base Llama-3.1-8B against the fine-tune on a held-out set of prompts:
+￼
+Fig. 03 · The fine-tune moved style, format, and domain fluency. It didn't move strong pretraining associations.
+What improved, clearly and reproducibly:
+	•	Format. More structured responses. Better use of headers, lists, and tables where appropriate. Less rambling.
+	•	Tone. More confident. Less "as an AI language model" hedging on technical topics it should be able to handle.
+	•	Terminology fluency. Comfortable with acronyms, comfortable with the cadence of an infrastructure conversation.
+	•	Task framing. Better at producing the kind of answer the prompt was actually asking for — sizing exercises looked like sizing exercises, architecture descriptions looked like architecture descriptions.
+What didn't move:
+	•	The model's underlying conceptual associations.
+	•	Strong priors anywhere those priors existed.
+	•	Factual recall in cases where my training examples contradicted what pretraining had encoded.
+￼
+Fig. 04 · Base vs fine-tuned response to the same CDU sizing prompt. Both wrong — the fine-tune is just better-wrong.
+The way I'd summarize it: the fine-tune taught the model how a CDU conversation should sound. It didn't teach the model what a CDU actually is.
+The methodology
+One failure isn't a finding. To be sure the CDU/PDU confusion was real and not a temperature artifact, I ran a small eval harness across four categories of prompts.
+￼
+Fig. 05 · Eval harness. Four prompt categories, both models, sampled multiple times at varied temperatures.
+Domain-fluency prompts checked whether the model used the right vocabulary. Format prompts checked whether it produced the structure I'd trained for. Factual prompts checked whether it knew the things I taught it. Adversarial prompts specifically probed adjacent-concept confusion — CDU vs PDU, fabric vs network, NVMe vs SSD, that kind of thing.
+The CDU/PDU failure was reproducible across temperature settings and prompt phrasings. It wasn't a sampling artifact. The model would confidently and consistently produce electrical answers to thermal questions. The five CDU examples in training data simply hadn't moved that needle.
+￼
+Fig. 06 · Full pipeline — synthetic dataset → LoRA training → eval harness → base/tuned comparison.
+￼
+Fig. 07 · Training run, raw terminal output.
+The lesson
+Here's the framing I'm taking forward:
+Fine-tune for form. RAG for facts.
+LoRA shifts behavior. It moves style, format, domain fluency, task specialization. It is a powerful tool for how a model speaks. It is a weak tool for what it knows — especially when the facts you're trying to install contradict strong pretraining priors.
+RAG does the opposite. It doesn't change how the model speaks; it changes what it has in its context window when it speaks. It installs facts. It provides citation and provenance. It accommodates knowledge that changes faster than you can retrain.
+￼
+Fig. 08 · Decision matrix. Same problem, different tool. The production answer is usually both.
+None of this framing is novel. The MLOps community has been saying versions of it for two years. But there's a real difference between reading it in a survey paper and watching it fail in a way you can't argue with on a domain you know cold.
+Where this sits in the NVIDIA stack
+The interview I'm preparing for is for an NVIDIA Solutions Architect role supporting NVIDIA Cloud Partners (NCPs). Worth being explicit about where my single-H100 LoRA work sits in that picture.
+￼
+Fig. 09 · Research-scale tools vs NCP production-scale tools. Same problems. Different solutions.
+What I built lives in the bottom-left quadrant: research-scale, single-GPU iteration. The tools were chosen for fast learning cycles — Unsloth for parameter-efficient training, PEFT and TRL from HuggingFace, vLLM for standalone inference.
+Where NCPs actually operate is top-right: hundreds-to-thousands of GPUs, multi-tenant, production-grade. The relevant tools shift accordingly: NeMo Framework for distributed fine-tuning, Dynamo for serving, Triton across clusters, BCM + Slurm for orchestration.
+The conversation an NCP customer actually needs to have isn't "should we fine-tune Nemotron?" It's: which fine-tune-and-RAG combination, on which slice of our stack, with which compute and latency budget? NVIDIA's NeMo Framework + NeMo Retriever stack is designed for exactly that combination. The lesson from my single-H100 run scales up — the relative strengths of fine-tune and RAG don't change at 1,000 GPUs.
+What's next
+The follow-on experiment is obvious: add RAG to the same domain. Same base model, same questions, same eval harness — but with a retrieval layer over my AI-infrastructure documentation in the prompt.
+The hypothesis: the CDU/PDU failure goes away when the right context is injected, even without any fine-tune at all. The fine-tune still helps — the answer will sound more like an infrastructure engineer wrote it — but the factual correctness comes from retrieval, not from weights.
+If that lands the way I expect, the practical answer to "should we fine-tune?" becomes much clearer: fine-tune for the voice you want, RAG for the facts you need, and stop confusing the two.
+⁂
+Building something infrastructure-heavy? Let's talk.
+I'm an AI infrastructure advisor and senior solution architect based in Denver. Open to senior roles where deep technical depth meets enterprise sales credibility.
+DOWNLOAD RESUME
+↓
+EMAIL ME
+→
+© JIM BOOTH · 2026
+DENVER, CO · 39.7°N 104.9°W
+BACK TO PORTFOLIO ↗
