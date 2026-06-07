@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0055)file:///Users/jimbooth/Downloads/index-portfolio_3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jim Booth — Technical Sales Leader, AI Infrastructure</title>
 <meta name="description" content="Twenty years deep in enterprise infrastructure, and not slowing down. Builds, projects, and a portfolio of work.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./AI Infrastructure_files/css2" rel="stylesheet">
 
 <style>
   :root {
@@ -119,6 +119,26 @@
     padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--rule);
     margin-bottom: 3.5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3.5rem;
+    align-items: start;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-text > *:last-child { margin-bottom: 0; }
+
+  .hero-visual {
+    position: relative;
+  }
+  .hero-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
   }
 
   .locus {
@@ -753,6 +773,17 @@
   footer.bottom a { color: inherit; text-decoration: none; transition: color 0.25s ease; }
   footer.bottom a:hover { color: var(--ink); }
 
+  /* ─── Tablet hero stack (image labels need legibility) ─── */
+  @media (max-width: 980px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+    .hero-visual {
+      max-width: 560px;
+    }
+  }
+
   /* ─── Mobile ─────────────────────────────────────── */
   @media (max-width: 780px) {
     body { font-size: 15px; }
@@ -768,6 +799,7 @@
     nav.primary .resume-link { padding: 0.45rem 0.75rem; }
 
     .hero { padding-bottom: 2.5rem; margin-bottom: 2.5rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2rem; }
     h1.lead { max-width: 100%; margin-bottom: 1.25rem; }
 
     .cta-group { flex-direction: column; align-items: stretch; }
@@ -837,52 +869,56 @@
 
   <!-- Header -->
   <header class="top">
-    <a href="#" class="wordmark">Jim Booth<em>Portfolio</em></a>
+    <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#" class="wordmark">Jim Booth<em>Portfolio</em></a>
     <nav class="primary">
-      <a href="#projects">Projects</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
+      <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#projects">Projects</a>
+      <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#expertise">Expertise</a>
+      <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#experience">Experience</a>
+      <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#contact">Contact</a>
       <a href="https://endur.dev/Jim_Booth_Resume.pdf" class="resume-link" target="_blank" rel="noopener">Resume</a>
     </nav>
   </header>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="locus fade-up d1">
-      <span class="dot"></span>
-      <span>Denver, Colorado</span>
-      <span class="sep">·</span>
-      <span>Advisor, AI Data Centers</span>
-      <span class="sep">·</span>
-      <span>Open to senior roles</span>
-    </div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="locus fade-up d1">
+          <span class="dot"></span>
+          <span>Denver, Colorado</span>
+          <span class="sep">·</span>
+          <span>Advisor, AI Data Centers</span>
+          <span class="sep">·</span>
+          <span>Open to senior roles</span>
+        </div>
 
-    <h1 class="lead fade-up d2">
-      I know the technology.<br>
-      <span class="dim">I build the trust.</span><br>
-      I close the<span class="mark"> technical win</span>.
-    </h1>
+        <h1 class="lead fade-up d2">
+          I know the technology.<br>
+          <span class="dim">I build the trust.</span><br>
+          I am the <span class="mark">technical closer</span>.
+        </h1>
 
-    <p class="hero-body fade-up d3">
-      Twenty years deep in enterprise infrastructure — and I'm not slowing
-      down.
-      
-      I build transformers from the attention layer up, design two-phase
-      cooling for GPU-dense racks, and run production systems where real money
-      is on the line. 
-      
-      Two decades earned the depth. Staying current earns the
-      trust.
-    </p>
+        <p class="hero-body fade-up d3">
+          Twenty years deep in enterprise infrastructure — and I'm not slowing
+          down. I build transformers from the attention layer up, design two-phase
+          cooling for GPU-dense racks, and run production systems where real money
+          is on the line. Two decades earned the depth. Staying current earns the
+          trust.
+        </p>
 
-    <div class="cta-group fade-up d4">
-      <a href="#projects" class="btn btn-primary">
-        See the work <span class="arrow">↓</span>
-      </a>
-      <a href="https://endur.dev/Jim_Booth_Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">
-        Download Resume <span class="arrow">↓</span>
-      </a>
+        <div class="cta-group fade-up d4">
+          <a href="file:///Users/jimbooth/Downloads/index-portfolio_3.html#projects" class="btn btn-primary">
+            See the work <span class="arrow">↓</span>
+          </a>
+          <a href="https://endur.dev/Jim_Booth_Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">
+            Download Resume <span class="arrow">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-up d3">
+        <img src="file:///Users/jimbooth/Downloads/overlay_featured_1600.png" alt="The Rare Mix — most careers cover one or two layers of AI infrastructure; Jim&#39;s career spans all seven, from Physical, Thermal &amp; Power up through Go-to-Market &amp; Commercial.">
+      </div>
     </div>
 
     <div class="ledger fade-up d5">
