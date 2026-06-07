@@ -1,0 +1,170 @@
+<svg viewBox="0 0 1200 1240" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="ca" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="0 0, 10 5, 0 10" fill="#0E1014"/>
+    </marker>
+    <marker id="cas" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <polygon points="0 0, 10 5, 0 10" fill="#9095A0"/>
+    </marker>
+  </defs>
+
+  <!-- title -->
+  <text x="600" y="42" text-anchor="middle" font-size="22" font-weight="500" fill="#0E1014">Inside the GPU — the compute layer</text>
+  <text x="600" y="66" text-anchor="middle" font-size="13" font-style="italic" fill="#545963">A GPU is a memory-bandwidth machine pretending to be a compute machine</text>
+
+  <!-- core principle banner -->
+  <rect x="40" y="92" width="1120" height="58" rx="2" fill="#EDEEF1" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="600" y="118" text-anchor="middle" font-size="13.5" font-weight="500" fill="#0E1014">The Tensor Cores can multiply faster than memory can feed them. Almost every optimization —</text>
+  <text x="600" y="138" text-anchor="middle" font-size="13.5" font-weight="500" fill="#0E1014">quantization, the memory hierarchy, kernel fusion — exists to keep the compute units fed.</text>
+
+  <!-- ============ COLUMN 1: MEMORY HIERARCHY ============ -->
+  <rect x="40" y="172" width="360" height="470" rx="2" fill="#EDEEF1" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="220" y="204" text-anchor="middle" font-size="16" font-weight="500" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#0E1014">MEMORY HIERARCHY</text>
+  <text x="220" y="224" text-anchor="middle" font-size="11" font-style="italic" fill="#9095A0">smaller + faster as you go in</text>
+  <line x1="70" y1="238" x2="370" y2="238" stroke="#DFE2E7"/>
+
+  <!-- registers -->
+  <rect x="100" y="252" width="240" height="40" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="2"/>
+  <text x="220" y="270" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">Registers</text>
+  <text x="220" y="285" text-anchor="middle" font-size="10" font-style="italic" fill="#545963">per-thread, instant, tiny</text>
+
+  <!-- SRAM / shared -->
+  <rect x="84" y="300" width="272" height="44" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="220" y="320" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">SRAM (shared mem / L1)</text>
+  <text x="220" y="336" text-anchor="middle" font-size="10" font-style="italic" fill="#545963">per-SM, ~10s TB/s, KB-scale</text>
+
+  <!-- L2 -->
+  <rect x="68" y="352" width="304" height="44" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="220" y="372" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">L2 cache</text>
+  <text x="220" y="388" text-anchor="middle" font-size="10" font-style="italic" fill="#545963">shared across SMs, ~tens of MB</text>
+
+  <!-- HBM -->
+  <rect x="52" y="404" width="336" height="48" rx="2" fill="#EDEEF1" stroke="#0E1014" stroke-width="2"/>
+  <text x="220" y="424" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">HBM (the GPU's main memory)</text>
+  <text x="220" y="440" text-anchor="middle" font-size="10" font-style="italic" fill="#545963">~TB/s, tens-of-GB, where weights live</text>
+
+  <!-- arrow showing direction -->
+  <line x1="408" y1="440" x2="408" y2="262" stroke="#9095A0" stroke-width="1.2" marker-end="url(#cas)"/>
+  <text x="396" y="356" font-size="9.5" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0" transform="rotate(-90 396 356)">faster, smaller</text>
+
+  <text x="56" y="480" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.05em" fill="#0E1014">THE KEY INSIGHT</text>
+  <text x="56" y="500" font-size="11.5" font-style="italic" fill="#545963">HBM bandwidth is the bottleneck for</text>
+  <text x="56" y="516" font-size="11.5" font-style="italic" fill="#545963">most inference. FlashAttention wins by</text>
+  <text x="56" y="532" font-size="11.5" font-style="italic" fill="#545963">keeping data in SRAM, not round-</text>
+  <text x="56" y="548" font-size="11.5" font-style="italic" fill="#545963">tripping to HBM.</text>
+
+  <text x="56" y="578" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">your lane: HBM is fed by the</text>
+  <text x="56" y="594" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">bypass path (GDS / RDMA)</text>
+
+  <rect x="56" y="606" width="328" height="22" rx="2" fill="#F4ECD8" stroke="#C2A368" stroke-width="1"/>
+  <text x="64" y="621" font-size="10.5" font-style="italic" fill="#7A5F1E">BREAKS: HBM-bound kernel -&gt; compute idles</text>
+
+  <!-- ============ COLUMN 2: COMPUTE UNITS ============ -->
+  <rect x="420" y="172" width="360" height="470" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="600" y="204" text-anchor="middle" font-size="16" font-weight="500" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#0E1014">COMPUTE UNITS</text>
+  <text x="600" y="224" text-anchor="middle" font-size="11" font-style="italic" fill="#9095A0">what actually does the math</text>
+  <line x1="450" y1="238" x2="750" y2="238" stroke="#DFE2E7"/>
+
+  <text x="442" y="264" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">SM (Streaming Multiprocessor)</text>
+  <text x="442" y="286" font-size="11.5" fill="#0E1014">the GPU's core unit; a GPU has</text>
+  <text x="442" y="302" font-size="11.5" fill="#0E1014">100+ SMs running in parallel</text>
+  <text x="442" y="318" font-size="11" font-style="italic" fill="#545963">each has CUDA cores + Tensor Cores</text>
+
+  <line x1="450" y1="336" x2="750" y2="336" stroke="#E8EAEE"/>
+
+  <text x="442" y="362" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">CUDA CORES</text>
+  <text x="442" y="384" font-size="11.5" fill="#0E1014">general-purpose parallel ALUs</text>
+  <text x="442" y="400" font-size="11" font-style="italic" fill="#545963">the classic "thousands of cores"</text>
+
+  <text x="442" y="430" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">TENSOR CORES</text>
+  <text x="442" y="452" font-size="11.5" fill="#0E1014">matrix-multiply-accumulate units</text>
+  <text x="442" y="468" font-size="11.5" fill="#0E1014">built for exactly the GEMM that</text>
+  <text x="442" y="484" font-size="11.5" fill="#0E1014">dominates deep learning</text>
+  <text x="442" y="500" font-size="11" font-style="italic" fill="#545963">this is the actual AI horsepower;</text>
+  <text x="442" y="516" font-size="11" font-style="italic" fill="#545963">FLOPS specs quote Tensor Core math</text>
+
+  <text x="442" y="546" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">CUDA = software model that maps</text>
+  <text x="442" y="562" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">your code onto all these SMs</text>
+
+  <rect x="436" y="606" width="328" height="22" rx="2" fill="#F4ECD8" stroke="#C2A368" stroke-width="1"/>
+  <text x="444" y="621" font-size="10.5" font-style="italic" fill="#7A5F1E">BREAKS: low occupancy -&gt; Tensor Cores starved</text>
+
+  <!-- ============ COLUMN 3: PRECISION ============ -->
+  <rect x="800" y="172" width="360" height="470" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="980" y="204" text-anchor="middle" font-size="16" font-weight="500" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#0E1014">PRECISION</text>
+  <text x="980" y="224" text-anchor="middle" font-size="11" font-style="italic" fill="#9095A0">fewer bits = more speed + room</text>
+  <line x1="830" y1="238" x2="1130" y2="238" stroke="#DFE2E7"/>
+
+  <text x="822" y="264" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">THE LADDER</text>
+  <text x="822" y="286" font-size="11.5" fill="#0E1014">FP32 -&gt; FP16 / BF16 -&gt; FP8 -&gt; FP4</text>
+  <text x="822" y="302" font-size="11" font-style="italic" fill="#545963">each step ~doubles throughput and</text>
+  <text x="822" y="318" font-size="11" font-style="italic" fill="#545963">halves memory footprint</text>
+
+  <text x="822" y="348" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">WHY IT MATTERS TWICE</text>
+  <text x="822" y="370" font-size="11.5" fill="#0E1014">1. more FLOPS — Tensor Cores run</text>
+  <text x="822" y="386" font-size="11.5" fill="#0E1014">    low precision much faster</text>
+  <text x="822" y="406" font-size="11.5" fill="#0E1014">2. less memory — a model in FP8</text>
+  <text x="822" y="422" font-size="11.5" fill="#0E1014">    is half the HBM of FP16</text>
+  <text x="822" y="438" font-size="11" font-style="italic" fill="#545963">both feed the "keep cores fed" goal</text>
+
+  <text x="822" y="468" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">GENERATION MATTERS</text>
+  <text x="822" y="490" font-size="11.5" fill="#0E1014">Hopper (H100) -&gt; FP8</text>
+  <text x="822" y="506" font-size="11.5" fill="#0E1014">Blackwell (B200/GB200) -&gt; FP4</text>
+  <text x="822" y="522" font-size="11" font-style="italic" fill="#545963">modern NIMs auto-pick FP8</text>
+  <text x="822" y="538" font-size="11" font-style="italic" fill="#545963">because it detected an H100</text>
+
+  <text x="822" y="568" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">tradeoff: accuracy vs speed —</text>
+  <text x="822" y="584" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#9095A0">quantization-aware methods limit loss</text>
+
+  <rect x="816" y="606" width="328" height="22" rx="2" fill="#F4ECD8" stroke="#C2A368" stroke-width="1"/>
+  <text x="824" y="621" font-size="10.5" font-style="italic" fill="#7A5F1E">BREAKS: too-aggressive quant -&gt; accuracy drop</text>
+
+  <!-- ============ SPINE ============ -->
+  <line x1="40" y1="672" x2="1160" y2="672" stroke="#DFE2E7" stroke-width="1"/>
+  <text x="600" y="704" text-anchor="middle" font-size="15" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.05em" fill="#0E1014">THE SPINE: IT'S ALL ABOUT KEEPING THE TENSOR CORES FED</text>
+  <text x="600" y="728" text-anchor="middle" font-size="12" font-style="italic" fill="#545963">Compute is cheap; moving data is expensive. The memory hierarchy, low precision, and kernel fusion all serve one goal: feed the cores.</text>
+
+  <!-- roofline-ish visual -->
+  <text x="600" y="770" text-anchor="middle" font-size="13" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.06em" fill="#0E1014">TWO KINDS OF BOTTLENECK  (which one are you?)</text>
+
+  <rect x="160" y="790" width="420" height="120" rx="2" fill="#EDEEF1" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="370" y="816" text-anchor="middle" font-size="13" font-weight="500" fill="#0E1014">Memory-bound</text>
+  <text x="180" y="840" font-size="11.5" fill="#0E1014">waiting on HBM bandwidth, cores idle</text>
+  <text x="180" y="860" font-size="11.5" fill="#0E1014">- LLM decode (one token at a time)</text>
+  <text x="180" y="878" font-size="11.5" fill="#0E1014">- small batches</text>
+  <text x="180" y="898" font-size="11" font-style="italic" fill="#545963">fix: bigger batch, fusion, quantize, KV cache</text>
+
+  <rect x="620" y="790" width="420" height="120" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="830" y="816" text-anchor="middle" font-size="13" font-weight="500" fill="#0E1014">Compute-bound</text>
+  <text x="640" y="840" font-size="11.5" fill="#0E1014">cores maxed, this is the good place</text>
+  <text x="640" y="860" font-size="11.5" fill="#0E1014">- LLM prefill (process whole prompt)</text>
+  <text x="640" y="878" font-size="11.5" fill="#0E1014">- training, large batches</text>
+  <text x="640" y="898" font-size="11" font-style="italic" fill="#545963">fix: lower precision, newer GPU gen</text>
+
+  <text x="600" y="942" text-anchor="middle" font-size="11.5" font-style="italic" fill="#545963">This is exactly why Dynamo disaggregates: prefill is compute-bound, decode is memory-bound — so run them on differently-tuned GPU pools.</text>
+
+  <!-- ============ PARTITIONING / FRAMING ============ -->
+  <line x1="40" y1="978" x2="1160" y2="978" stroke="#DFE2E7" stroke-width="1"/>
+  <text x="600" y="1006" text-anchor="middle" font-size="12" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.05em" fill="#0E1014">SLICING ONE GPU  (multi-tenancy)</text>
+
+  <rect x="120" y="1024" width="300" height="92" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="270" y="1048" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">MIG</text>
+  <text x="135" y="1070" font-size="11" fill="#0E1014">hardware partition — isolated</text>
+  <text x="135" y="1086" font-size="11" fill="#0E1014">slices, own memory + compute</text>
+  <text x="135" y="1104" font-size="10.5" font-style="italic" fill="#545963">strong isolation; multi-tenant safe</text>
+
+  <rect x="450" y="1024" width="300" height="92" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="600" y="1048" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">MPS</text>
+  <text x="465" y="1070" font-size="11" fill="#0E1014">spatial sharing, one context</text>
+  <text x="465" y="1086" font-size="11" fill="#0E1014">splits SMs, no hard isolation</text>
+  <text x="465" y="1104" font-size="10.5" font-style="italic" fill="#545963">throughput play, trusted workloads</text>
+
+  <rect x="780" y="1024" width="300" height="92" rx="2" fill="#FAFBFC" stroke="#0E1014" stroke-width="1.5"/>
+  <text x="930" y="1048" text-anchor="middle" font-size="12.5" font-weight="500" fill="#0E1014">Time-slicing</text>
+  <text x="795" y="1070" font-size="11" fill="#0E1014">round-robin the whole GPU</text>
+  <text x="795" y="1086" font-size="11" fill="#0E1014">simplest, no isolation at all</text>
+  <text x="795" y="1104" font-size="10.5" font-style="italic" fill="#545963">dev/test, bursty light loads</text>
+
+  <text x="600" y="1156" text-anchor="middle" font-size="12" font-style="italic" fill="#545963">The framing: MIG is the GPU analog of SR-IOV on the NIC and namespaces on the CPU — hardware-enforced isolation is what makes a shared GPU multi-tenant-safe.</text>
+  <text x="600" y="1186" text-anchor="middle" font-size="11" font-family="'IBM Plex Mono', ui-monospace, monospace" letter-spacing="0.04em" fill="#9095A0">terms:  SM · Tensor Core · CUDA core · HBM · SRAM · L2 · FP8/FP4 · GEMM · occupancy · roofline · FlashAttention · MIG / MPS · arithmetic intensity</text>
+</svg>
