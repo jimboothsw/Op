@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Diagram — Jim Booth</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #F4F5F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    max-width: 96vw;
+    max-height: 96vh;
+    width: auto;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+<img id="d" alt="">
+<script>
+  const svg = new URLSearchParams(location.search).get('svg');
+  if (svg) {
+    document.getElementById('d').src = svg;
+    document.title = svg.replace(/\.svg$/, '').replace(/_/g, ' ') + ' — Jim Booth';
+  }
+</script>
+</body>
+</html>
